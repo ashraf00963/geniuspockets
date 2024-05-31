@@ -1,68 +1,232 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* Primary Colors */
+  --color-navy-blue: #002855;
+  --color-white: #ffffff;
+  
+  /* Secondary Colors */
+  --color-gold: #ffd700;
+  --color-sky-blue: #87ceeb;
+  
+  /* Accent Colors */
+  --color-green: #228b22;
+  --color-gray: #a9a9a9;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Text Colors */
+  --color-dark-gray: #333333;
+  --color-light-gray: #b0b0b0;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  /* Font Settings */
+  --font-primary: 'Raleway', sans-serif; /* New font: Raleway */
+  --font-secondary: 'Roboto', sans-serif;
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  /* General Styles */
+  --font-size-base: 16px;
+  --font-size-heading: 2rem;
+  --font-size-subheading: 1.5rem;
+  --font-size-body: 1rem;
+  --line-height-base: 1.5;
+
+  /* Input Styles */
+  --input-border-radius: 0.25rem;
+  --input-padding: 0.5rem;
+  --input-border-width: 1px;
+  --input-border-color: #ced4da;
+  --input-focus-border-color: #80bdff;
+  --input-focus-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+
+   /* Password Input Styles */
+   --input-padding: 0.5rem;
+   --input-border-width: 1px;
+   --input-border-color: #ced4da;
+   --input-focus-border-color: #80bdff;
+   --input-focus-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+   --icon-color: #999;
 }
 
 body {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  color: var(--color-dark-gray);
+  background-color: var(--color-white);
+  line-height: var(--line-height-base);
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  color: var(--color-navy-blue);
+  margin: 0 0 1rem 0;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: var(--font-size-heading);
+}
+
+h2 {
+  font-size: var(--font-size-subheading);
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+h4 {
+  font-size: 1.125rem;
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+h6 {
+  font-size: 0.875rem;
+}
+
+p {
+  margin: 0 0 1rem 0;
+  font-size: var(--font-size-body);
+}
+
+a {
+  color: var(--color-navy-blue);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: var(--color-green);
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-body);
+  padding: 0.5rem 1rem;
+  border: none;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-@media (prefers-color-scheme: light) {
+.btn-primary {
+  background-color: var(--color-gold);
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  background-color: darken(var(--color-gold), 10%);
+}
+
+.btn-secondary {
+  background-color: var(--color-sky-blue);
+  color: var(--color-white);
+}
+
+.btn-secondary:hover {
+  background-color: darken(var(--color-sky-blue), 10%);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--color-navy-blue);
+  color: var(--color-navy-blue);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-navy-blue);
+  color: var(--color-white);
+}
+
+.header, .footer {
+  background-color: var(--color-navy-blue);
+  color: var(--color-white);
+  padding: 1rem;
+}
+
+.header a, .footer a {
+  color: var(--color-white);
+}
+
+.header a:hover, .footer a:hover {
+  color: var(--color-gold);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Apply styles to input fields */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+textarea {
+  padding: var(--input-padding);
+  border-radius: var(--input-border-radius);
+  border: var(--input-border-width) solid var(--input-border-color);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Style for input fields on focus */
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+  border-color: var(--input-focus-border-color);
+  outline: 0;
+  box-shadow: var(--input-focus-box-shadow);
+}
+
+.password-input-container {
+  position: relative;
+  width: fit-content;
+}
+
+.password-input-field {
+  padding-right: 40px; /* Adjust according to icon width */
+  padding: var(--input-padding);
+  border: var(--input-border-width) solid var(--input-border-color);
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  color: var(--icon-color);
+  cursor: pointer;
+}
+
+
+/* Small devices (phones, less than 768px) */
+@media (max-width: 767.98px) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --font-size-base: 14px;
+    --font-size-heading: 1.75rem;
+    --font-size-subheading: 1.25rem;
+    --font-size-body: 0.875rem;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  :root {
+    --font-size-base: 15px;
+    --font-size-heading: 1.875rem;
+    --font-size-subheading: 1.375rem;
+    --font-size-body: 0.9375rem;
   }
 }
