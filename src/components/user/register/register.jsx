@@ -16,8 +16,28 @@ function Register() {
         setPasswordVisible(!passwordVisible);
     };
 
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+    };
+
+    const validatePassword = (password) => {
+        const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        return re.test(String(password));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!validateEmail(email)) {
+            setError("Invalid email format");
+            return;
+        }
+
+        if (!validatePassword(password)) {
+            setError("Password must be at least 8 characters long and include at least one letter, one number, and one special character");
+            return;
+        }
 
         if (password !== confirmPass) {
             setError("Passwords do not match");
@@ -56,40 +76,46 @@ function Register() {
     };
 
     return (
-        <div className='Reg__form container'>
-            <h2>Register</h2>
-            {error && <p className="error">{error}</p>}
-            {success && <p className="success">{success}</p>}
-            <form onSubmit={handleSubmit}>
-                <div className='Reg__inputs'>
-                    <div className='Reg__inputs-name'>
-                        <input type='text' value={fName} onChange={(e) => setFname(e.target.value)} placeholder='First Name' required />
-                        <input type='text' value={lName} onChange={(e) => setLname(e.target.value)} placeholder='Last Name' required />
+        <div className='container'>
+            <div className='Reg__form'>
+                <div className='Reg__card card'>
+                    <h2>Register</h2>
+                    <div className='Reg__messages'>
+                        {error && <p className="error">{error}</p>}
+                        {success && <p className="success">{success}</p>}
                     </div>
-                    <input type='text' value={userName} onChange={(e) => setUserName(e.target.value)} placeholder='Username' required />
-                    <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' required />
-                    <div className='Reg__inputs-password'>
-                        <div className="password-input-container">
-                            <input
-                              type={passwordVisible ? 'text' : 'password'}
-                              className="password-input-field"
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                              placeholder="Password"
-                              required
-                            />
-                            <i
-                              className={`password-toggle-icon ${
-                                passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'
-                              }`}
-                              onClick={togglePasswordVisibility}
-                            ></i>
+                    <form onSubmit={handleSubmit}>
+                        <div className='Reg__inputs'>
+                            <div className='Reg__inputs-name'>
+                                <input type='text' value={fName} onChange={(e) => setFname(e.target.value)} placeholder='First Name' required />
+                                <input type='text' value={lName} onChange={(e) => setLname(e.target.value)} placeholder='Last Name' required />
+                            </div>
+                            <input type='text' value={userName} onChange={(e) => setUserName(e.target.value)} placeholder='Username' required />
+                            <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' required />
+                            <div className='Reg__inputs-password'>
+                                <div className="password-input-container">
+                                    <input
+                                      type={passwordVisible ? 'text' : 'password'}
+                                      className="password-input-field"
+                                      value={password}
+                                      onChange={(e) => setPassword(e.target.value)}
+                                      placeholder="Password"
+                                      required
+                                    />
+                                    <i
+                                      className={`password-toggle-icon ${
+                                        passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'
+                                      }`}
+                                      onClick={togglePasswordVisibility}
+                                    ></i>
+                                </div>
+                                <input type='password' value={confirmPass} onChange={(e) => setConfirmPass(e.target.value)} placeholder='Confirm Password' required />
+                            </div>
                         </div>
-                        <input type='password' value={confirmPass} onChange={(e) => setConfirmPass(e.target.value)} placeholder='Confirm Password' required />
-                    </div>
+                        <button className='Reg__btn btn-primary' type='submit'>Register</button>
+                    </form>
                 </div>
-                <button type='submit'>Register</button>
-            </form>
+            </div>
         </div>
     );
 }

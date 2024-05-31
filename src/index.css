@@ -110,19 +110,21 @@ button {
 .btn-primary {
   background-color: var(--color-gold);
   color: var(--color-white);
+  border-radius: var(--input-border-radius);
 }
 
 .btn-primary:hover {
-  background-color: darken(var(--color-gold), 10%);
+  background-color: #ccae01;
 }
 
 .btn-secondary {
   background-color: var(--color-sky-blue);
   color: var(--color-white);
+  border-radius: var(--input-border-radius);
 }
 
 .btn-secondary:hover {
-  background-color: darken(var(--color-sky-blue), 10%);
+  background-color: #449efd;
 }
 
 .btn-outline {
@@ -174,6 +176,7 @@ textarea {
   padding: var(--input-padding);
   border-radius: var(--input-border-radius);
   border: var(--input-border-width) solid var(--input-border-color);
+  outline: none;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -184,7 +187,7 @@ input[type="email"]:focus,
 input[type="number"]:focus,
 textarea:focus {
   border-color: var(--input-focus-border-color);
-  outline: 0;
+  outline: none;
   box-shadow: var(--input-focus-box-shadow);
 }
 
@@ -198,6 +201,7 @@ textarea:focus {
   padding: var(--input-padding);
   border: var(--input-border-width) solid var(--input-border-color);
   border-radius: 0.25rem;
+  outline: none;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -228,5 +232,14 @@ textarea:focus {
     --font-size-heading: 1.875rem;
     --font-size-subheading: 1.375rem;
     --font-size-body: 0.9375rem;
+  }
+}
+
+
+@media screen and (max-width: 550px) {
+  .container {
+    max-width: 1200px;
+    margin: 4rem 0;
+    padding: 0 1rem;
   }
 }

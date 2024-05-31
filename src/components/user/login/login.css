@@ -1,0 +1,45 @@
+.Login__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 5rem;
+}
+
+.Login__card {
+    width: 20rem;
+}
+
+.Login__card h2 {
+    font-size: 2rem;
+    margin: 1rem;
+    margin-bottom: 0rem;
+}
+
+.Login__messages p {
+    margin: 0;
+    padding: 0.2rem;
+    margin-left: 1rem;
+}
+
+.Login__inputs {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+.Login__inputs input {
+    outline: none;
+    outline-color: transparent;
+}
+
+.Login__btn {
+    margin-left: 1rem;
+}
+
+@media screen and (max-width: 550px) {
+    .Login__card {
+        width: 80%;
+    }
+}
