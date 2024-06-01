@@ -45,19 +45,23 @@ function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("Form submitted");
 
         if (!validateEmail(email)) {
             setError("Invalid email format");
+            console.log("Invalid email format");
             return;
         }
 
         if (!validatePassword(password)) {
             setError("Password must be at least 8 characters long and include at least one letter, one number, and one special character");
+            console.log("Password does not meet criteria");
             return;
         }
 
         if (password !== confirmPass) {
             setError("Passwords do not match");
+            console.log("Passwords do not match");
             return;
         }
 
@@ -78,7 +82,11 @@ function Register() {
                 body: JSON.stringify(data),
             });
 
+            console.log("Server response:", response);
+
             const result = await response.json();
+            console.log("Server result:", result);
+
             if (result.success) {
                 setSuccess(result.message);
                 setError(null);
@@ -89,6 +97,7 @@ function Register() {
         } catch (error) {
             setError("An error occurred. Please try again later.");
             setSuccess(null);
+            console.log("Error during registration:", error);
         }
     };
 
@@ -142,3 +151,4 @@ function Register() {
 }
 
 export default Register;
+
