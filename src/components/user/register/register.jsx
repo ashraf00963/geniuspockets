@@ -11,6 +11,7 @@ function Register() {
     const [error, setError] = useState(null);
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [success, setSuccess] = useState(null);
+    const [passwordStrength, setPasswordStrength] = useState(0);
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
@@ -24,6 +25,22 @@ function Register() {
     const validatePassword = (password) => {
         const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         return re.test(String(password));
+    };
+
+    const calculatePasswordStrength = (password) => {
+        let score = 0;
+        if (password.length >= 8) score += 1; // At least 8 characters
+        if (/[A-Z]/.test(password)) score += 1; // Uppercase letter
+        if (/[a-z]/.test(password)) score += 1; // Lowercase letter
+        if (/\d/.test(password)) score += 1; // Digit
+        if (/[@$!%*?&]/.test(password)) score += 1; // Special character
+        return score;
+    };
+
+    const handlePasswordChange = (e) => {
+        const newPassword = e.target.value;
+        setPassword(newPassword);
+        setPasswordStrength(calculatePasswordStrength(newPassword));
     };
 
     const handleSubmit = async (e) => {
@@ -98,7 +115,7 @@ function Register() {
                                       type={passwordVisible ? 'text' : 'password'}
                                       className="password-input-field"
                                       value={password}
-                                      onChange={(e) => setPassword(e.target.value)}
+                                      onChange={handlePasswordChange}
                                       placeholder="Password"
                                       required
                                     />
@@ -109,8 +126,12 @@ function Register() {
                                       onClick={togglePasswordVisibility}
                                     ></i>
                                 </div>
+                                
                                 <input type='password' value={confirmPass} onChange={(e) => setConfirmPass(e.target.value)} placeholder='Confirm Password' required />
                             </div>
+                        </div>
+                        <div className="password-strength-bar">
+                            <div className={`strength-${passwordStrength}`}></div>
                         </div>
                         <button className='Reg__btn btn-primary' type='submit'>Register</button>
                     </form>
