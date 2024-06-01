@@ -23,10 +23,16 @@ function AccountSettings() {
                 }
                 return response.json();
             })
-            .then(data => setProfile(data.data))
+            .then(data => {
+                if (data.success) {
+                    setProfile(data.data);
+                } else {
+                    setMessage(data.message);
+                }
+            })
             .catch(error => setMessage(`Error fetching profile: ${error.message}`));
     }, []);
-    
+
     const handleProfileChange = (e) => {
         const { name, value } = e.target;
         setProfile(prevProfile => ({
@@ -37,28 +43,38 @@ function AccountSettings() {
 
     const handleProfileSubmit = (e) => {
         e.preventDefault();
-        fetch('/account.php', {
+        fetch('/profile.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(profile),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => setMessage(data.message))
         .catch(error => setMessage(`Error updating profile: ${error.message}`));
     };
 
     const handleEmailSubmit = (e) => {
         e.preventDefault();
-        fetch('/request_email_change.php', {
+        fetch('/account/email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ newEmail }),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => setMessage(data.message))
         .catch(error => setMessage(`Error requesting email change: ${error.message}`));
     };
@@ -70,27 +86,36 @@ function AccountSettings() {
             return;
         }
 
-        fetch('/account.php', {
+        fetch('/account/password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ newPassword }),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => setMessage(data.message))
         .catch(error => setMessage(`Error changing password: ${error.message}`));
     };
 
     const handleDeactivateAccount = () => {
-        fetch('/account.php', {
+        fetch('/account/deactivate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ action: 'deactivate' })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => setMessage(data.message))
         .catch(error => setMessage(`Error deactivating account: ${error.message}`));
     };
@@ -102,13 +127,18 @@ function AccountSettings() {
                 'Content-Type': 'application/json',
             },
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
                 localStorage.removeItem('token');
                 window.location.href = '/login';
             } else {
-                setMessage('Error logging out');
+                setMessage(data.message);
             }
         })
         .catch(error => setMessage(`Error logging out: ${error.message}`));
@@ -125,7 +155,7 @@ function AccountSettings() {
                         <input
                             type="text"
                             name="firstName"
-                            value={profile.firstName}
+                            value={profile.firstName || ''}
                             onChange={handleProfileChange}
                             placeholder={profile.firstName || "First Name"}
                             required
@@ -133,7 +163,7 @@ function AccountSettings() {
                         <input
                             type="text"
                             name="lastName"
-                            value={profile.lastName}
+                            value={profile.lastName || ''}
                             onChange={handleProfileChange}
                             placeholder={profile.lastName || "Last Name"}
                             required
@@ -141,7 +171,7 @@ function AccountSettings() {
                         <input
                             type="text"
                             name="username"
-                            value={profile.username}
+                            value={profile.username || ''}
                             onChange={handleProfileChange}
                             placeholder={profile.username || "Username"}
                             required
