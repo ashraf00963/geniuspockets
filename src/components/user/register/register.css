@@ -29,7 +29,7 @@
     margin-top: 2rem;
 }
 
-.Reg__inputs-password {
+.Reg__input-password {
     display: flex;
 }
 
@@ -51,50 +51,6 @@
     margin: 0;
     padding: 0rem;
 }
-
-/* Add these styles to your existing register.css */
-
-.password-strength-bar {
-    height: 5px;
-    width: 100%;
-    background-color: #e0e0e0;
-    margin-top: 5px;
-}
-
-.password-strength-bar > div {
-    height: 100%;
-}
-
-.strength-0 {
-    width: 0;
-    background-color: #e0e0e0;
-}
-
-.strength-1 {
-    width: 20%;
-    background-color: red;
-}
-
-.strength-2 {
-    width: 40%;
-    background-color: orange;
-}
-
-.strength-3 {
-    width: 60%;
-    background-color: yellow;
-}
-
-.strength-4 {
-    width: 80%;
-    background-color: lightgreen;
-}
-
-.strength-5 {
-    width: 100%;
-    background-color: green;
-}
-
 
 @media screen and (max-width: 550px) {
     .Reg__form {
@@ -120,5 +76,12 @@
     .Reg__inputs-name {
         display: flex;
         flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .Reg__form h2 {
+        margin-left: 0;
+        font-size: 1.5rem;
     }
 }

@@ -1,0 +1,40 @@
+.account__card h3 {
+    margin-top: 1rem;
+}
+
+.account__card form {
+    border-top: 1px solid #000000;
+    padding: 1rem;
+}
+
+.account__btn {
+    margin-bottom: 1rem;
+}
+
+.account__profile {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+}
+
+.account__de-btn {
+    background-color: #c50000 !important;
+}
+
+.account__de-btn:hover {
+    background-color: #740707 !important;
+}
+
+@media screen and (max-width: 350px) {
+    .account__card form {
+        padding: 1rem 0;
+    }
+
+    .account__btn {
+        font-size: 0.8rem;
+    }
+
+    .account__de-btn {
+        font-size: 0.8rem;
+    }
+}

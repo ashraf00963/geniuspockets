@@ -111,6 +111,7 @@ button {
   background-color: var(--color-gold);
   color: var(--color-white);
   border-radius: var(--input-border-radius);
+  margin-top: 1rem;
 }
 
 .btn-primary:hover {
@@ -121,6 +122,7 @@ button {
   background-color: var(--color-sky-blue);
   color: var(--color-white);
   border-radius: var(--input-border-radius);
+  margin-top: 1rem;
 }
 
 .btn-secondary:hover {
@@ -197,7 +199,6 @@ textarea:focus {
 }
 
 .password-input-field {
-  padding-right: 40px; /* Adjust according to icon width */
   padding: var(--input-padding);
   border: var(--input-border-width) solid var(--input-border-color);
   border-radius: 0.25rem;
@@ -238,8 +239,14 @@ textarea:focus {
 
 @media screen and (max-width: 550px) {
   .container {
-    max-width: 1200px;
+    max-width: 500px;
     margin: 4rem 0;
     padding: 0 1rem;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  input {
+    width: 60vw;
   }
 }
