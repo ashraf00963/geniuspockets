@@ -22,22 +22,31 @@ function Register() {
         return re.test(String(email).toLowerCase());
     };
 
+    const hasLowerCase = (str) => /[a-z]/.test(str);
+    const hasUpperCase = (str) => /[A-Z]/.test(str);
+    const hasDigit = (str) => /\d/.test(str);
+    const hasSpecialChar = (str) => /[@$!%*?&]/.test(str);
+    const hasMinLength = (str) => str.length >= 8;
+
     const validatePassword = (password) => {
         console.log("Validating password:", password);
-        // Revised regex to ensure proper validation
-        const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        const isValid = re.test(String(password));
-        console.log("Password valid:", isValid);
-        return isValid;
+        const valid = hasLowerCase(password) && hasUpperCase(password) && hasDigit(password) && hasSpecialChar(password) && hasMinLength(password);
+        console.log(`Password valid: ${valid}`);
+        console.log(`Lower case: ${hasLowerCase(password)}`);
+        console.log(`Upper case: ${hasUpperCase(password)}`);
+        console.log(`Digit: ${hasDigit(password)}`);
+        console.log(`Special char: ${hasSpecialChar(password)}`);
+        console.log(`Min length: ${hasMinLength(password)}`);
+        return valid;
     };
 
     const calculatePasswordStrength = (password) => {
         let score = 0;
-        if (password.length >= 8) score += 1; // At least 8 characters
-        if (/[A-Z]/.test(password)) score += 1; // Uppercase letter
-        if (/[a-z]/.test(password)) score += 1; // Lowercase letter
-        if (/\d/.test(password)) score += 1; // Digit
-        if (/[@$!%*?&]/.test(password)) score += 1; // Special character
+        if (hasMinLength(password)) score += 1; // At least 8 characters
+        if (hasUpperCase(password)) score += 1; // Uppercase letter
+        if (hasLowerCase(password)) score += 1; // Lowercase letter
+        if (hasDigit(password)) score += 1; // Digit
+        if (hasSpecialChar(password)) score += 1; // Special character
         return score;
     };
 
