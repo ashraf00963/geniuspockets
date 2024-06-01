@@ -15,22 +15,12 @@ function AccountSettings() {
     const [message, setMessage] = useState(null);
 
     useEffect(() => {
-        // Fetch user profile data from profile.php
+        // Fetch user profile data
         fetch('/profile.php')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    setProfile({
-                        firstName: data.data.first_name,
-                        lastName: data.data.last_name,
-                        username: data.data.username,
-                        email: data.data.email,
-                    });
+                    setProfile(data.data);
                 } else {
                     setMessage(data.message);
                 }
@@ -48,38 +38,28 @@ function AccountSettings() {
 
     const handleProfileSubmit = (e) => {
         e.preventDefault();
-        fetch('/account/profile', {
+        fetch('/account.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(profile),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => setMessage(data.message))
         .catch(error => setMessage(`Error updating profile: ${error.message}`));
     };
 
     const handleEmailSubmit = (e) => {
         e.preventDefault();
-        fetch('/account/email', {
+        fetch('/request_email_change.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ newEmail }),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => setMessage(data.message))
         .catch(error => setMessage(`Error requesting email change: ${error.message}`));
     };
@@ -91,36 +71,27 @@ function AccountSettings() {
             return;
         }
 
-        fetch('/account/password', {
+        fetch('/account.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ newPassword }),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => setMessage(data.message))
         .catch(error => setMessage(`Error changing password: ${error.message}`));
     };
 
     const handleDeactivateAccount = () => {
-        fetch('/account/deactivate', {
+        fetch('/account.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({ action: 'deactivate' })
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => setMessage(data.message))
         .catch(error => setMessage(`Error deactivating account: ${error.message}`));
     };
@@ -135,8 +106,8 @@ function AccountSettings() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                localStorage.removeItem('token'); // Remove token from local storage
-                window.location.href = '/login'; // Redirect to login page
+                localStorage.removeItem('token');
+                window.location.href = '/login';
             } else {
                 setMessage('Error logging out');
             }
@@ -157,7 +128,7 @@ function AccountSettings() {
                             name="firstName"
                             value={profile.firstName}
                             onChange={handleProfileChange}
-                            placeholder="First Name"
+                            placeholder={profile.firstName || "First Name"}
                             required
                         />
                         <input
@@ -165,7 +136,7 @@ function AccountSettings() {
                             name="lastName"
                             value={profile.lastName}
                             onChange={handleProfileChange}
-                            placeholder="Last Name"
+                            placeholder={profile.lastName || "Last Name"}
                             required
                         />
                         <input
@@ -173,7 +144,7 @@ function AccountSettings() {
                             name="username"
                             value={profile.username}
                             onChange={handleProfileChange}
-                            placeholder="Username"
+                            placeholder={profile.username || "Username"}
                             required
                         />
                     </div>
@@ -201,7 +172,7 @@ function AccountSettings() {
                 </form>
 
                 <button className='account__de-btn btn-primary' onClick={handleDeactivateAccount}>Deactivate Account</button>
-                <button className='account__logout-btn btn-secondary' onClick={handleLogout}>Logout</button>
+                <button className='account__btn btn-secondary' onClick={handleLogout}>Logout</button>
             </div>
         </div>
     );
