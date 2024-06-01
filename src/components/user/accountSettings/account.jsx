@@ -15,21 +15,15 @@ function AccountSettings() {
     const [message, setMessage] = useState(null);
 
     useEffect(() => {
-        // Fetch user profile data
-        fetch('/account/profile')
+        // Fetch user profile data from profile.php
+        fetch('/profile.php')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
             })
-            .then(data => {
-                if (data.success) {
-                    setProfile(data.data);
-                } else {
-                    setMessage(data.message);
-                }
-            })
+            .then(data => setProfile(data))
             .catch(error => setMessage(`Error fetching profile: ${error.message}`));
     }, []);
 
@@ -120,30 +114,6 @@ function AccountSettings() {
         .catch(error => setMessage(`Error deactivating account: ${error.message}`));
     };
 
-    const handleLogout = () => {
-        fetch('/logout.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                localStorage.removeItem('token');
-                navigate('/login');
-            } else {
-                setMessage(data.message);
-            }
-        })
-        .catch(error => setMessage(`Error logging out: ${error.message}`));
-    };
-
     return (
         <div className="container">
             <div className='account__card card'>
@@ -201,7 +171,6 @@ function AccountSettings() {
                 </form>
 
                 <button className='account__de-btn btn-primary' onClick={handleDeactivateAccount}>Deactivate Account</button>
-                <button className='account__logout-btn btn-secondary' onClick={handleLogout}>Logout</button>
             </div>
         </div>
     );
