@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './account.css';
 import PasswordInput from '../password/PasswordInput';
 
@@ -14,7 +13,6 @@ function AccountSettings() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState(null);
-    const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch user profile data
@@ -25,7 +23,13 @@ function AccountSettings() {
                 }
                 return response.json();
             })
-            .then(data => setProfile(data))
+            .then(data => {
+                if (data.success) {
+                    setProfile(data.data);
+                } else {
+                    setMessage(data.message);
+                }
+            })
             .catch(error => setMessage(`Error fetching profile: ${error.message}`));
     }, []);
 
@@ -195,7 +199,7 @@ function AccountSettings() {
                     <PasswordInput password={newPassword} setPassword={setNewPassword} confirmPass={confirmPassword} setConfirmPass={setConfirmPassword} />
                     <button className='account__btn btn-secondary' type="submit">Change Password</button>
                 </form>
-                
+
                 <button className='account__de-btn btn-primary' onClick={handleDeactivateAccount}>Deactivate Account</button>
                 <button className='account__logout-btn btn-secondary' onClick={handleLogout}>Logout</button>
             </div>
