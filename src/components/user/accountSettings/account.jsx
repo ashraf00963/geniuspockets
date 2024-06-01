@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './account.css';
 import PasswordInput from '../password/PasswordInput';
 
@@ -13,6 +14,7 @@ function AccountSettings() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch user profile data
@@ -114,6 +116,30 @@ function AccountSettings() {
         .catch(error => setMessage(`Error deactivating account: ${error.message}`));
     };
 
+    const handleLogout = () => {
+        fetch('/logout.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                localStorage.removeItem('token');
+                navigate('/login');
+            } else {
+                setMessage(data.message);
+            }
+        })
+        .catch(error => setMessage(`Error logging out: ${error.message}`));
+    };
+
     return (
         <div className="container">
             <div className='account__card card'>
@@ -169,8 +195,9 @@ function AccountSettings() {
                     <PasswordInput password={newPassword} setPassword={setNewPassword} confirmPass={confirmPassword} setConfirmPass={setConfirmPassword} />
                     <button className='account__btn btn-secondary' type="submit">Change Password</button>
                 </form>
-
+                
                 <button className='account__de-btn btn-primary' onClick={handleDeactivateAccount}>Deactivate Account</button>
+                <button className='account__logout-btn btn-secondary' onClick={handleLogout}>Logout</button>
             </div>
         </div>
     );
