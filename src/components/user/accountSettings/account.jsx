@@ -17,17 +17,16 @@ function AccountSettings() {
     useEffect(() => {
         // Fetch user profile data
         fetch('/profile.php')
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    setProfile(data.data);
-                } else {
-                    setMessage(data.message);
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
+                return response.json();
             })
+            .then(data => setProfile(data.data))
             .catch(error => setMessage(`Error fetching profile: ${error.message}`));
     }, []);
-
+    
     const handleProfileChange = (e) => {
         const { name, value } = e.target;
         setProfile(prevProfile => ({
