@@ -23,8 +23,11 @@ function Register() {
     };
 
     const validatePassword = (password) => {
+        console.log("Validating password:", password);
         const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        return re.test(String(password));
+        const isValid = re.test(String(password));
+        console.log("Password valid:", isValid);
+        return isValid;
     };
 
     const calculatePasswordStrength = (password) => {
