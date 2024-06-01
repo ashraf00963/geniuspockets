@@ -24,7 +24,8 @@ function Register() {
 
     const validatePassword = (password) => {
         console.log("Validating password:", password);
-        const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        // Revised regex to ensure proper validation
+        const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         const isValid = re.test(String(password));
         console.log("Password valid:", isValid);
         return isValid;
