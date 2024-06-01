@@ -23,7 +23,18 @@ function AccountSettings() {
                 }
                 return response.json();
             })
-            .then(data => setProfile(data))
+            .then(data => {
+                if (data.success) {
+                    setProfile({
+                        firstName: data.data.first_name,
+                        lastName: data.data.last_name,
+                        username: data.data.username,
+                        email: data.data.email,
+                    });
+                } else {
+                    setMessage(data.message);
+                }
+            })
             .catch(error => setMessage(`Error fetching profile: ${error.message}`));
     }, []);
 
@@ -114,6 +125,25 @@ function AccountSettings() {
         .catch(error => setMessage(`Error deactivating account: ${error.message}`));
     };
 
+    const handleLogout = () => {
+        fetch('/logout.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                localStorage.removeItem('token'); // Remove token from local storage
+                window.location.href = '/login'; // Redirect to login page
+            } else {
+                setMessage('Error logging out');
+            }
+        })
+        .catch(error => setMessage(`Error logging out: ${error.message}`));
+    };
+
     return (
         <div className="container">
             <div className='account__card card'>
@@ -127,7 +157,7 @@ function AccountSettings() {
                             name="firstName"
                             value={profile.firstName}
                             onChange={handleProfileChange}
-                            placeholder={profile.firstName || "First Name"}
+                            placeholder="First Name"
                             required
                         />
                         <input
@@ -135,7 +165,7 @@ function AccountSettings() {
                             name="lastName"
                             value={profile.lastName}
                             onChange={handleProfileChange}
-                            placeholder={profile.lastName || "Last Name"}
+                            placeholder="Last Name"
                             required
                         />
                         <input
@@ -143,7 +173,7 @@ function AccountSettings() {
                             name="username"
                             value={profile.username}
                             onChange={handleProfileChange}
-                            placeholder={profile.username || "Username"}
+                            placeholder="Username"
                             required
                         />
                     </div>
@@ -171,6 +201,7 @@ function AccountSettings() {
                 </form>
 
                 <button className='account__de-btn btn-primary' onClick={handleDeactivateAccount}>Deactivate Account</button>
+                <button className='account__logout-btn btn-secondary' onClick={handleLogout}>Logout</button>
             </div>
         </div>
     );
