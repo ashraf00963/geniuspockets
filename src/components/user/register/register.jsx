@@ -25,7 +25,7 @@ function Register() {
     const hasLowerCase = (str) => /[a-z]/.test(str);
     const hasUpperCase = (str) => /[A-Z]/.test(str);
     const hasDigit = (str) => /\d/.test(str);
-    const hasSpecialChar = (str) => /[@$!%*?&]/.test(str);
+    const hasSpecialChar = (str) => /[!@#$%^&*(),.?":{}|<>]/.test(str);
     const hasMinLength = (str) => str.length >= 8;
 
     const validatePassword = (password) => {
