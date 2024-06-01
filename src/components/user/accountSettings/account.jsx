@@ -17,9 +17,14 @@ function AccountSettings() {
     useEffect(() => {
         // Fetch user profile data
         fetch('/account/profile')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => setProfile(data))
-            .catch(error => console.error('Error fetching profile:', error));
+            .catch(error => setMessage(`Error fetching profile: ${error.message}`));
     }, []);
 
     const handleProfileChange = (e) => {
@@ -39,9 +44,14 @@ function AccountSettings() {
             },
             body: JSON.stringify(profile),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => setMessage(data.message))
-        .catch(error => setMessage('Error updating profile'));
+        .catch(error => setMessage(`Error updating profile: ${error.message}`));
     };
 
     const handleEmailSubmit = (e) => {
@@ -53,9 +63,14 @@ function AccountSettings() {
             },
             body: JSON.stringify({ newEmail }),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => setMessage(data.message))
-        .catch(error => setMessage('Error requesting email change'));
+        .catch(error => setMessage(`Error requesting email change: ${error.message}`));
     };
 
     const handlePasswordSubmit = (e) => {
@@ -72,9 +87,14 @@ function AccountSettings() {
             },
             body: JSON.stringify({ newPassword }),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => setMessage(data.message))
-        .catch(error => setMessage('Error changing password'));
+        .catch(error => setMessage(`Error changing password: ${error.message}`));
     };
 
     const handleDeactivateAccount = () => {
@@ -84,9 +104,14 @@ function AccountSettings() {
                 'Content-Type': 'application/json',
             },
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => setMessage(data.message))
-        .catch(error => setMessage('Error deactivating account'));
+        .catch(error => setMessage(`Error deactivating account: ${error.message}`));
     };
 
     return (
@@ -141,7 +166,7 @@ function AccountSettings() {
 
                 <form onSubmit={handlePasswordSubmit}>
                     <h3>Change Password</h3>
-                    <PasswordInput password={newPassword} setPassword={setNewPassword} />
+                    <PasswordInput password={newPassword} setPassword={setNewPassword} confirmPass={confirmPassword} setConfirmPass={setConfirmPassword} />
                     <button className='account__btn btn-secondary' type="submit">Change Password</button>
                 </form>
 
