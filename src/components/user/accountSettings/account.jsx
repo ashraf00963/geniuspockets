@@ -38,7 +38,7 @@ function AccountSettings() {
 
     const handleProfileSubmit = (e) => {
         e.preventDefault();
-        fetch('/profile.php', {
+        fetch('/account/profile.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -102,13 +102,11 @@ function AccountSettings() {
                 'Content-Type': 'application/json',
             },
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                localStorage.removeItem('token');
+        .then(response => {
+            if (response.ok) {
                 window.location.href = '/login';
             } else {
-                setMessage(data.message);
+                setMessage('Error logging out');
             }
         })
         .catch(error => setMessage(`Error logging out: ${error.message}`));
@@ -125,7 +123,7 @@ function AccountSettings() {
                         <input
                             type="text"
                             name="firstName"
-                            value={profile.firstName || ''}
+                            value={profile.firstName}
                             onChange={handleProfileChange}
                             placeholder={profile.firstName || "First Name"}
                             required
@@ -133,7 +131,7 @@ function AccountSettings() {
                         <input
                             type="text"
                             name="lastName"
-                            value={profile.lastName || ''}
+                            value={profile.lastName}
                             onChange={handleProfileChange}
                             placeholder={profile.lastName || "Last Name"}
                             required
@@ -141,7 +139,7 @@ function AccountSettings() {
                         <input
                             type="text"
                             name="username"
-                            value={profile.username || ''}
+                            value={profile.username}
                             onChange={handleProfileChange}
                             placeholder={profile.username || "Username"}
                             required
@@ -178,4 +176,3 @@ function AccountSettings() {
 }
 
 export default AccountSettings;
-
