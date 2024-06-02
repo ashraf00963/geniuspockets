@@ -2,15 +2,17 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Register from './components/user/register/register';
 import Login from './components/user/login/login';
-import Home from './components/home';
 import AccountSettings from './components/user/accountSettings/account';
 import ProtectedRoute from './components/user/ProtectedRoute';
+import Navbar from './components/navbar/navbar';
+import Intro from './components/intro/intro';
 
 function App() {
   return (
     <Router>
+      <Navbar />
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Intro />} />
         <Route path='/register' element={
           <ProtectedRoute>
             <Register />
