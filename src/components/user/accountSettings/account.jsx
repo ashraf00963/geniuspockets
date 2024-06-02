@@ -113,9 +113,9 @@ function AccountSettings() {
         .then(data => {
             setMessage(data.message);
             if (data.success) {
-                // Redirect to the login page after account deactivation
+                // Redirect to the Home page after account deactivation
                 setTimeout(() => {
-                    window.location.href = '/login';
+                    window.location.href = '/';
                 }, 1000);
             }
         })
@@ -137,8 +137,8 @@ function AccountSettings() {
         })
         .then(data => {
             if (data.success) {
-                // Redirect to the login page after logout
-                window.location.href = '/login';
+                // Redirect to the Home page after logout
+                window.location.href = '/';
             }
         })
         .catch(error => setMessage(`Error logging out: ${error.message}`));

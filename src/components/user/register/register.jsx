@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PasswordInput from '../password/PasswordInput';
 import './register.css';
 
 function Register() {
@@ -141,27 +142,9 @@ function Register() {
                             <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' required />
                             <div className='Reg__inputs-password'>
                                 <div className="password-input-container">
-                                    <input
-                                      type={passwordVisible ? 'text' : 'password'}
-                                      className="password-input-field"
-                                      value={password}
-                                      onChange={handlePasswordChange}
-                                      placeholder="Password"
-                                      required
-                                    />
-                                    <i
-                                      className={`password-toggle-icon ${
-                                        passwordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'
-                                      }`}
-                                      onClick={togglePasswordVisibility}
-                                    ></i>
+                                    <PasswordInput password={password} setPassword={setPassword} confirmPass={confirmPass} setConfirmPass={setConfirmPass} />
                                 </div>
-                                
-                                <input type='password' value={confirmPass} onChange={(e) => setConfirmPass(e.target.value)} placeholder='Confirm Password' required />
                             </div>
-                        </div>
-                        <div className="password-strength-bar">
-                            <div className={`strength-${passwordStrength}`}></div>
                         </div>
                         <button className='Reg__btn btn-primary' type='submit'>Register</button>
                     </form>
