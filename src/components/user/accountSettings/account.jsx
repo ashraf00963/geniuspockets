@@ -23,13 +23,7 @@ function AccountSettings() {
                 }
                 return response.json();
             })
-            .then(data => {
-                if (data.success) {
-                    setProfile(data.data);
-                } else {
-                    setMessage(data.message);
-                }
-            })
+            .then(data => setProfile(data.data))
             .catch(error => setMessage(`Error fetching profile: ${error.message}`));
     }, []);
 
@@ -116,7 +110,15 @@ function AccountSettings() {
             }
             return response.json();
         })
-        .then(data => setMessage(data.message))
+        .then(data => {
+            setMessage(data.message);
+            if (data.success) {
+                // Redirect to the login page after account deactivation
+                setTimeout(() => {
+                    window.location.href = '/login';
+                }, 1000);
+            }
+        })
         .catch(error => setMessage(`Error deactivating account: ${error.message}`));
     };
 
@@ -133,9 +135,11 @@ function AccountSettings() {
             }
             return response.json();
         })
-        .then(() => {
-            localStorage.removeItem('token');
-            window.location.href = '/login';
+        .then(data => {
+            if (data.success) {
+                // Redirect to the login page after logout
+                window.location.href = '/login';
+            }
         })
         .catch(error => setMessage(`Error logging out: ${error.message}`));
     };
@@ -197,7 +201,7 @@ function AccountSettings() {
                 </form>
 
                 <button className='account__de-btn btn-primary' onClick={handleDeactivateAccount}>Deactivate Account</button>
-                <button className='account__btn btn-secondary' onClick={handleLogout}>Logout</button>
+                <button className='account__logout-btn btn-secondary' onClick={handleLogout}>Logout</button>
             </div>
         </div>
     );
