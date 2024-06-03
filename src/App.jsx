@@ -11,14 +11,13 @@ import Identify from './components/user/forgotPassword/identify';
 function App() {
   return (
     <Router>
-      <AuthCheck />
       <Navbar />
       <Routes>
         <Route path='/' element={<Intro />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/login/identify' element={<Identify />} />
-        <Route path='/account' element={<AccountSettings />} />
+        <Route path='/account' element={<AuthCheck><AccountSettings /></AuthCheck>} />
       </Routes>
     </Router>
   );
