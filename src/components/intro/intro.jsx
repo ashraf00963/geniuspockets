@@ -1,9 +1,9 @@
-import { Charts, Jars, noFee } from '../../assets/index'
+import { Charts, Jars, noFee, Logo } from '../../assets/index';
 import './intro.css';
 
-function Intro () {
+function Intro() {
     return (
-        <div className='intro__page'>
+        <div className='intro__page container'>
             <div className='intro__header'>
                 <h1>Are you ready to fill your pockets?</h1>
                 <p id='intro__header-p'>Genius Pockets makes it easy to save and control your finances</p>
@@ -20,10 +20,10 @@ function Intro () {
                         <p>Pockets allow you to allocate funds to different goals without the need for multiple bank accounts. This way, you can easily track your progress towards each goal and adjust your budget accordingly.</p>
                     </div>
                 </div>
-                <img src={Jars} />
+                <img src={Jars} alt="Jars" />
             </div>
             <div className='intro__section' id='light__section'>
-                <img src={Charts} />
+                <img src={Charts} alt="Charts" />
                 <div className='intro__section-text'>
                     <h2>With Less, You Can Make More</h2>
                     <div className='intro__section1-text3'>
@@ -56,29 +56,45 @@ function Intro () {
                         <p>At Genius Pockets, we are dedicated to maintaining a platform that puts your financial wellbeing first. We promise to keep our services free and transparent, helping you to save more and spend smarter.</p>
                     </div>
                 </div>
-                <img src={noFee} />
+                <img src={noFee} alt="No Fees" />
             </div>
-            <div className='intro__footer'>
-                <div className='intro__footer-section1'>
-                    <h4>Info</h4>
-                    <ul>
-                        <li>About Genius Pockets</li>
-                        <li>Privacy Policy</li>
-                        <li>Terms of Service</li>
-                    </ul>
+            <footer className='intro__footer'>
+                <div className='intro__footer-logo'>
+                    <img src={Logo} alt="Genius Pockets Logo" />
                 </div>
-                <div className='intro__footer-section2'>
-                    <h4>Contact Us</h4>
-                    <ul>
-                        <li>Email: support@geniuspockets.com</li>
-                        <li>Phone: +123-456-7890</li>
-                        <li>Address: 123 Finance street</li>
-                    </ul>
+                <div className='intro__footer-container'>
+                    <div className='intro__footer-info'>
+                        <h4>Info</h4>
+                        <ul>
+                            <li>About Genius Pockets</li>
+                            <li>Privacy Policy</li>
+                            <li>Terms of Service</li>
+                        </ul>
+                    </div>
+                    <div className='intro__footer-contact'>
+                        <h4>Contact Us</h4>
+                        <ul>
+                            <li>Email: support@geniuspockets.com</li>
+                            <li>Phone: +123-456-7890</li>
+                            <li>Address: 123 Finance Street</li>
+                        </ul>
+                    </div>
+                    <div className='intro__footer-social'>
+                        <h4>Follow Us</h4>
+                        <ul>
+                            <li><a href="https://facebook.com">Facebook</a></li>
+                            <li><a href="https://twitter.com">Twitter</a></li>
+                            <li><a href="https://instagram.com">Instagram</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <p id='copyRight'>&copy; 2024 Genius Pockets. All rights reserved.</p>
+                <div className='intro__footer-bottom'>
+                    <p>Genius Pockets</p>
+                    <p>&copy; 2024 Genius Pockets. All rights reserved.</p>
+                </div>
+            </footer>
         </div>
-    )
+    );
 }
 
 export default Intro;

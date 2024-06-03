@@ -6,6 +6,7 @@ import AccountSettings from './components/user/accountSettings/account';
 import Navbar from './components/navbar/navbar';
 import Intro from './components/intro/intro';
 import AuthCheck from './components/user/AuthCheck';
+import Identify from './components/user/forgotPassword/identify';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='/' element={<Intro />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/login/identify' element={<Identify />} />
         <Route path='/account' element={<AccountSettings />} />
       </Routes>
     </Router>

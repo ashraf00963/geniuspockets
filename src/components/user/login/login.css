@@ -34,8 +34,37 @@
     outline-color: transparent;
 }
 
+.Login__btns {
+    display: flex;
+    flex-direction: column;
+}
+
+.Login__btns a {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
 .Login__btn {
-    margin-left: 1rem;
+    margin: 0 1rem;
+    margin-bottom: 1rem;
+}
+
+.regg__btn {
+    border-top: 1px solid #000000;
+    text-align: center;
+}
+
+.Login__reg-btn {
+    border-radius: 5px;
+    margin-top: 1rem;
+    width: fit-content;
+    color: #fff;
+    background-color: #228b22;
+    font-size: 0.8rem;
+}
+
+.Login__reg-btn:hover {
+    background-color: #175f17;
 }
 
 @media screen and (max-width: 550px) {

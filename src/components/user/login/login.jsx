@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link, Outlet  } from 'react-router-dom';
 import './login.css';
 
 function Login() {
@@ -76,10 +76,17 @@ function Login() {
                 required
               />
             </div>
-            <button className='Login__btn btn-primary' type='submit'>Login</button>
+            <div className='Login__btns'>
+              <button className='Login__btn btn-primary' type='submit'>Login</button>
+              <Link to='identify'>Forgot password?</Link>
+              <div className='regg__btn'>
+                <button className='Login__reg-btn'>Create new account</button>
+              </div>
+            </div>
           </form>
         </div>
       </div>
+      
     </div>
   );
 }

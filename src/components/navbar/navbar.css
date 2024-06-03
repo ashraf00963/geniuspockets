@@ -3,7 +3,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: white;
+    background-color: #fbfae8;
     z-index: 1000;
     box-shadow: 0px 1px 5px -4px #000;
 }
@@ -40,49 +40,6 @@
     gap: 1rem;
 }
 
-/* Hamburger button style */
-.hamburger {
-    display: inline-block;
-    cursor: pointer;
-}
-
-.hamburger div {
-    width: 35px;
-    height: 5px;
-    background-color: #333;
-    margin: 6px 0;
-    transition: 0.4s;
-}
-
-.hamburger.open .bar1 {
-    transform: rotate(-45deg) translate(-9px, 6px);
-}
-
-.hamburger.open .bar2 {
-    opacity: 0;
-}
-
-.hamburger.open .bar3 {
-    transform: rotate(45deg) translate(-8px, -8px);
-}
-
-/* Dropdown content style */
-.dropdown__content {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 60px; /* Adjust based on navbar height */
-    right: 0; /* Align to the right edge */
-    background-color: white;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 2000; /* Ensure it is on top of other content */
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-.dropdown__content.show {
-    display: flex;
-}
-
 /* Style for the login button */
 .login__button {
     background-color: #228B22;
@@ -109,40 +66,49 @@
     background-color: #c5c4c4;
 }
 
-/* Animation for dropdown */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 /* Responsive design for screen sizes 550px or less */
 @media (max-width: 550px) {
     .navbar__absolute {
-        flex-direction: row;
-        justify-content: space-between;
+        padding: 0;
     }
 
     .navbar__absolute h1 {
         font-size: 28px;
+        margin-left: 0.2rem;
+    }
+    
+    .register__button {
+        display: none;
+    }
+
+    .login__button {
+        margin: 0;
+        margin-right: 0.5rem;
+        padding: 0.4rem 0.8rem;
     }
 
     #genius {
         font-size: 26px;
     }
 
-    .dropdown__button {
+    .login__button, .register__button {
         width: 100%;
-        margin-bottom: 0.5rem;
+    }
+}
+
+
+@media screen and (max-width: 280px) {
+    .navbar__absolute {
+        flex-direction: column;
     }
 
-    .dropdown__content {
+    .navbar__absolute h1 {
+        margin: 0.2rem 0;
+        margin-bottom: 0;
+    }
+    
+    .login__button {
         width: 100%;
-        right: 0;
+        margin: 0.2rem 0;
     }
 }
