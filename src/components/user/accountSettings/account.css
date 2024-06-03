@@ -1,5 +1,5 @@
 .account__card {
-    margin-top: 5rem;
+    margin-top: 5rem !important;
 }
 
 .account__card h3 {
@@ -27,6 +27,16 @@
 
 .account__de-btn:hover {
     background-color: #740707 !important;
+}
+
+.account__end-btns {
+    display: flex;
+    flex-direction: column;
+}
+
+.account__danger-zone {
+    border-top: 1px solid #000000;
+    padding: 1rem;
 }
 
 @media screen and (max-width: 350px) {

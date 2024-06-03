@@ -232,8 +232,12 @@ function AccountSettings() {
                     <button className='account__btn btn-secondary' type="submit">Change Password</button>
                 </form>
 
-                <button className='account__de-btn btn-primary' onClick={handleDeactivateAccount}>Deactivate Account</button>
-                <button className='account__logout-btn btn-secondary' onClick={handleLogout}>Logout</button>
+                <div className='account__end-btns'>
+                    <button className='account__logout-btn btn-secondary' onClick={handleLogout}>Logout</button>
+                    <div className='account__danger-zone'>
+                        <button className='account__de-btn btn-primary' onClick={handleDeactivateAccount}>Deactivate Account</button>
+                    </div>
+                </div>
             </div>
         </div>
     );
