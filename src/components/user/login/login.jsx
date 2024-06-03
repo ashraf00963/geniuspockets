@@ -50,6 +50,10 @@ function Login() {
     }
   };
 
+  const handleNaviToRegister = () => {
+    navigate('/register');
+  }
+
   return (
     <div className='container'>
       <div className='Login__form'>
@@ -80,7 +84,7 @@ function Login() {
               <button className='Login__btn btn-primary' type='submit'>Login</button>
               <Link to='identify'>Forgot password?</Link>
               <div className='regg__btn'>
-                <button className='Login__reg-btn'>Create new account</button>
+                <button className='Login__reg-btn' onClick={handleNaviToRegister}>Create new account</button>
               </div>
             </div>
           </form>
