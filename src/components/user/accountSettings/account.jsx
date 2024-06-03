@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import './account.css';
 import PasswordInput from '../password/PasswordInput';
 
@@ -13,19 +14,50 @@ function AccountSettings() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch user profile data
-        fetch('/profile.php')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+        const checkSession = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    navigate('/login');
+                    return;
                 }
-                return response.json();
-            })
-            .then(data => setProfile(data.data))
-            .catch(error => setMessage(`Error fetching profile: ${error.message}`));
-    }, []);
+
+                const response = await fetch('/checkSession.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ token }),
+                });
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    localStorage.removeItem('token');
+                    navigate('/login');
+                } else {
+                    // Fetch user profile data
+                    fetch('/profile.php')
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => setProfile(data.data))
+                        .catch(error => setMessage(`Error fetching profile: ${error.message}`));
+                }
+            } catch (error) {
+                setMessage(`Error checking session: ${error.message}`);
+                navigate('/login');
+            }
+        };
+
+        checkSession();
+    }, [navigate]);
 
     const handleProfileChange = (e) => {
         const { name, value } = e.target;
