@@ -1,0 +1,52 @@
+.dashboard {
+    padding: 20px;
+    margin-top: 5rem;
+}
+
+.dashboard__overview,
+.dashboard__savings-pockets,
+.dashboard__recent-transactions {
+    margin-bottom: 20px;
+}
+
+.dashboard__overview-cards {
+    display: flex;
+    justify-content: space-around;
+}
+
+.dashboard__card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    width: 30%;
+    text-align: center;
+}
+
+.dashboard__pockets-list,
+.dashboard__transactions-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dashboard__pocket,
+.dashboard__transaction {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    width: calc(33.333% - 20px);
+}
+
+@media (max-width: 768px) {
+    .dashboard__overview-cards,
+    .dashboard__pockets-list,
+    .dashboard__transactions-list {
+        flex-direction: column;
+    }
+
+    .dashboard__card,
+    .dashboard__pocket,
+    .dashboard__transaction {
+        width: 100%;
+    }
+}
