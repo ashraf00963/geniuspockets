@@ -235,6 +235,7 @@ function AccountSettings() {
                 <div className='account__end-btns'>
                     <button className='account__logout-btn btn-secondary' onClick={handleLogout}>Logout</button>
                     <div className='account__danger-zone'>
+                        <h3>Danger Zone</h3>
                         <button className='account__de-btn btn-primary' onClick={handleDeactivateAccount}>Deactivate Account</button>
                     </div>
                 </div>
