@@ -45,7 +45,6 @@ function AccountSettings() {
                             if (!response.ok) {
                                 throw new Error('Network response was not ok');
                             }
-                            localStorage.setItem('username', data.username); 
                             return response.json();
                         })
                         .then(data => setProfile(data.data))
@@ -56,6 +55,7 @@ function AccountSettings() {
                 navigate('/login');
             }
         };
+        localStorage.setItem('username', profile.username);
 
         checkSession();
     }, [navigate]);
