@@ -40,15 +40,7 @@ function AccountSettings() {
                     navigate('/login');
                 } else {
                     // Fetch user profile data
-                    fetch('/profile.php')
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(data => setProfile(data.data))
-                        .catch(error => setMessage(`Error fetching profile: ${error.message}`));
+                    fetchProfile();
                 }
             } catch (error) {
                 setMessage(`Error checking session: ${error.message}`);
@@ -56,6 +48,18 @@ function AccountSettings() {
             }
         };
         
+        const fetchProfile = async () => {
+            try {
+                const response = await fetch('/profile.php');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setProfile(data.data);
+            } catch (error) {
+                setMessage(`Error fetching profile: ${error.message}`);
+            }
+        };
 
         checkSession();
     }, [navigate]);
@@ -68,116 +72,119 @@ function AccountSettings() {
         }));
     };
 
-    const handleProfileSubmit = (e) => {
+    const handleProfileSubmit = async (e) => {
         e.preventDefault();
-        fetch('/profile.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(profile),
-        })
-        .then(response => {
+        try {
+            const response = await fetch('/profile.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(profile),
+            });
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json();
-        })
-        .then(data => setMessage(data.message))
-        .catch(error => setMessage(`Error updating profile: ${error.message}`));
+            const data = await response.json();
+            setMessage(data.message);
+        } catch (error) {
+            setMessage(`Error updating profile: ${error.message}`);
+        }
     };
 
-    const handleEmailSubmit = (e) => {
+    const handleEmailSubmit = async (e) => {
         e.preventDefault();
-        fetch('/request_email_change.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ newEmail }),
-        })
-        .then(response => {
+        try {
+            const response = await fetch('/request_email_change.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ newEmail }),
+            });
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json();
-        })
-        .then(data => setMessage(data.message))
-        .catch(error => setMessage(`Error requesting email change: ${error.message}`));
+            const data = await response.json();
+            setMessage(data.message);
+        } catch (error) {
+            setMessage(`Error requesting email change: ${error.message}`);
+        }
     };
 
-    const handlePasswordSubmit = (e) => {
+    const handlePasswordSubmit = async (e) => {
         e.preventDefault();
         if (newPassword !== confirmPassword) {
             setMessage('Passwords do not match');
             return;
         }
 
-        fetch('/password.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ newPassword }),
-        })
-        .then(response => {
+        try {
+            const response = await fetch('/password.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ newPassword }),
+            });
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json();
-        })
-        .then(data => setMessage(data.message))
-        .catch(error => setMessage(`Error changing password: ${error.message}`));
+            const data = await response.json();
+            setMessage(data.message);
+        } catch (error) {
+            setMessage(`Error changing password: ${error.message}`);
+        }
     };
 
-    const handleDeactivateAccount = () => {
-        fetch('/deactivate.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => {
+    const handleDeactivateAccount = async () => {
+        try {
+            const response = await fetch('/deactivate.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json();
-        })
-        .then(data => {
+            const data = await response.json();
             setMessage(data.message);
             if (data.success) {
-                // Redirect to the login page after account deactivation
                 setTimeout(() => {
+                    localStorage.removeItem('token');
                     window.location.href = '/login';
                 }, 1000);
             }
-        })
-        .catch(error => setMessage(`Error deactivating account: ${error.message}`));
+        } catch (error) {
+            setMessage(`Error deactivating account: ${error.message}`);
+        }
     };
 
-    const handleLogout = () => {
-        fetch('/logout.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => {
+    const handleLogout = async () => {
+        try {
+            const response = await fetch('/logout.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json();
-        })
-        .then(data => {
+            const data = await response.json();
             if (data.success) {
-                // Redirect to the login page after logout
+                localStorage.removeItem('token');
                 window.location.href = '/login';
             }
-        })
-        .catch(error => setMessage(`Error logging out: ${error.message}`));
+        } catch (error) {
+            setMessage(`Error logging out: ${error.message}`);
+        }
     };
 
-    localStorage.setItem('username', profile.username);
+    useEffect(() => {
+        localStorage.setItem('username', profile.username);
+    }, [profile.username]);
     
     return (
         <div className="container">
