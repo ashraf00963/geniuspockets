@@ -8,6 +8,7 @@ import Intro from './components/intro/intro';
 import AuthCheck from './components/user/AuthCheck';
 import Identify from './components/user/forgotPassword/identify';
 import Dashboard from './components/dashboard/dashboard';
+import Pockets from './components/dashboard/pockets/pockets';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path='/login/identify' element={<Identify />} />
         <Route path='/account' element={<AuthCheck><AccountSettings /></AuthCheck>} />
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/dashboard/mypockets' element={<Pockets />} /> 
       </Routes>
     </Router>
   );
