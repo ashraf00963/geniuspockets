@@ -6,8 +6,8 @@ import './dashboard.css';
 function Dashboard() {
   const [totalBalance, setTotalBalance] = useState(0);
   const [savingsPockets, setSavingsPockets] = useState([]);
-  const [recentTransactions, setRecentTransactions] = useState([]);
   const [userName, setUserName] = useState('');
+  const [recentTransactions, setRecentTransactions] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -82,7 +82,7 @@ function Dashboard() {
     $.ajax({
       url: 'https://geniuspockets.com/get_recent_transactions.php',
       method: 'POST',
-      data: { token, type: 'add' },
+      data: { token },
       dataType: 'json',
       success: (response) => {
         setRecentTransactions(response.transactions.slice(0, 3)); // Get only the last three transactions
@@ -97,7 +97,7 @@ function Dashboard() {
     navigate('/dashboard/mypockets');
   };
 
-  const handleAddMoney = () => {
+  const handleAddTransaction = () => {
     navigate('/dashboard/transaction');
   };
 
@@ -136,13 +136,13 @@ function Dashboard() {
         <div className="dashboard__transactions-list">
           {recentTransactions.map((transaction, index) => (
             <div key={index} className="dashboard__transaction">
-              <p>{transaction.reason}</p>
+              <p>{transaction.description}</p>
               <p>{transaction.amount}</p>
               <p>{transaction.date}</p>
             </div>
           ))}
         </div>
-        <button className="add-money-button" onClick={handleAddMoney}>
+        <button className="add-transaction-button" onClick={handleAddTransaction}>
           Add Money
         </button>
       </div>
