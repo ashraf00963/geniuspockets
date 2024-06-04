@@ -6,8 +6,8 @@ import './dashboard.css';
 function Dashboard() {
   const [totalBalance, setTotalBalance] = useState(0);
   const [savingsPockets, setSavingsPockets] = useState([]);
-  const [userName, setUserName] = useState('');
   const [recentTransactions, setRecentTransactions] = useState([]);
+  const [userName, setUserName] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,11 +51,7 @@ function Dashboard() {
       data: { token },
       dataType: 'json',
       success: (response) => {
-        if (response.success) {
-          setTotalBalance(response.total_balance);
-        } else {
-          console.error('Error fetching total balance:', response.message);
-        }
+        setTotalBalance(response.total_balance);
       },
       error: (xhr, status, error) => {
         console.error('Error fetching total balance:', error);
@@ -82,10 +78,10 @@ function Dashboard() {
     $.ajax({
       url: 'https://geniuspockets.com/get_recent_transactions.php',
       method: 'POST',
-      data: { token },
+      data: { token, type: 'expense' }, // Adjust as needed for your use case
       dataType: 'json',
       success: (response) => {
-        setRecentTransactions(response.transactions.slice(0, 3)); // Get only the last three transactions
+        setRecentTransactions(response.transactions.slice(0, 3)); // Get only the latest three transactions
       },
       error: (xhr, status, error) => {
         console.error('Error fetching recent transactions:', error);
@@ -136,14 +132,14 @@ function Dashboard() {
         <div className="dashboard__transactions-list">
           {recentTransactions.map((transaction, index) => (
             <div key={index} className="dashboard__transaction">
-              <p>{transaction.description}</p>
+              <p>{transaction.reason}</p>
               <p>{transaction.amount}</p>
               <p>{transaction.date}</p>
             </div>
           ))}
         </div>
         <button className="add-transaction-button" onClick={handleAddTransaction}>
-          Add Money
+          Add Transaction
         </button>
       </div>
     </div>
