@@ -19,6 +19,7 @@ function Transaction() {
 
     const data = {
       token,
+      type,
       reason,
       amount,
     };
