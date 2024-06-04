@@ -9,9 +9,12 @@ function Dashboard() {
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [savingsPockets, setSavingsPockets] = useState([]);
   const [recentTransactions, setRecentTransactions] = useState([]);
+  const [userName, setUserName] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
+    const username = localStorage.getItem('username');
+    setUserName(username);
     checkAuthentication();
   }, []);
 
@@ -122,6 +125,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
+        <h1>Welcome back {userName},</h1>
       <div className="dashboard__overview">
         <h2>Dashboard Overview</h2>
         <div className="dashboard__overview-cards">
