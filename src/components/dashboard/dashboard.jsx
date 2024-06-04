@@ -5,10 +5,7 @@ import './dashboard.css';
 
 function Dashboard() {
   const [totalBalance, setTotalBalance] = useState(0);
-  const [totalIncome, setTotalIncome] = useState(0);
-  const [totalExpenses, setTotalExpenses] = useState(0);
   const [savingsPockets, setSavingsPockets] = useState([]);
-  const [recentTransactions, setRecentTransactions] = useState([]);
   const [userName, setUserName] = useState('');
   const navigate = useNavigate();
 
@@ -35,10 +32,7 @@ function Dashboard() {
           navigate('/login');
         } else {
           fetchTotalBalance(token);
-          fetchTotalIncome(token);
-          fetchTotalExpenses(token);
           fetchSavingsPockets(token);
-          fetchRecentTransactions(token, 'expense');
         }
       },
       error: (xhr, status, error) => {
@@ -63,36 +57,6 @@ function Dashboard() {
     });
   };
 
-  const fetchTotalIncome = (token) => {
-    $.ajax({
-      url: 'https://geniuspockets.com/get_total_income.php',
-      method: 'POST',
-      data: { token },
-      dataType: 'json',
-      success: (response) => {
-        setTotalIncome(response.total_income);
-      },
-      error: (xhr, status, error) => {
-        console.error('Error fetching total income:', error);
-      }
-    });
-  };
-
-  const fetchTotalExpenses = (token) => {
-    $.ajax({
-      url: 'https://geniuspockets.com/get_total_expenses.php',
-      method: 'POST',
-      data: { token },
-      dataType: 'json',
-      success: (response) => {
-        setTotalExpenses(response.total_expenses);
-      },
-      error: (xhr, status, error) => {
-        console.error('Error fetching total expenses:', error);
-      }
-    });
-  };
-
   const fetchSavingsPockets = (token) => {
     $.ajax({
       url: 'https://geniuspockets.com/get_savings_pockets.php',
@@ -100,7 +64,7 @@ function Dashboard() {
       data: { token },
       dataType: 'json',
       success: (response) => {
-        setSavingsPockets(response.savings_pockets);
+        setSavingsPockets(response.savings_pockets.slice(0, 2)); // Get only the last two pockets
       },
       error: (xhr, status, error) => {
         console.error('Error fetching savings pockets:', error);
@@ -108,38 +72,19 @@ function Dashboard() {
     });
   };
 
-  const fetchRecentTransactions = (token, type) => {
-    $.ajax({
-      url: 'https://geniuspockets.com/get_recent_transactions.php',
-      method: 'POST',
-      data: { token, type },
-      dataType: 'json',
-      success: (response) => {
-        setRecentTransactions(response.transactions);
-      },
-      error: (xhr, status, error) => {
-        console.error('Error fetching recent transactions:', error);
-      }
-    });
+  const handleShowMorePockets = () => {
+    navigate('/dashboard/mypockets');
   };
 
   return (
     <div className="dashboard">
-        <h1>Welcome back {userName},</h1>
+      <h1>Welcome back {userName},</h1>
       <div className="dashboard__overview">
-        <h2>Dashboard Overview</h2>
+        <h2>My Dashboard</h2>
         <div className="dashboard__overview-cards">
           <div className="dashboard__card">
             <h3>Total Balance</h3>
             <p>${totalBalance}</p>
-          </div>
-          <div className="dashboard__card">
-            <h3>Total Income</h3>
-            <p>${totalIncome}</p>
-          </div>
-          <div className="dashboard__card">
-            <h3>Total Expenses</h3>
-            <p>${totalExpenses}</p>
           </div>
         </div>
       </div>
@@ -149,24 +94,17 @@ function Dashboard() {
           {savingsPockets.map((pocket) => (
             <div key={pocket.id} className="dashboard__pocket">
               <h3>{pocket.name}</h3>
-              <p>Target: ${pocket.target_amount}</p>
-              <p>Current: ${pocket.current_amount}</p>
-              <p>Progress: {pocket.progress_percentage.toFixed(2)}%</p>
+              <p>Goal: ${pocket.goal_amount}</p>
+              <p>Deadline: {pocket.deadline}</p>
+              <p>Saved: ${pocket.saved_amount}</p>
             </div>
           ))}
         </div>
-      </div>
-      <div className="dashboard__recent-transactions">
-        <h2>Recent Transactions</h2>
-        <div className="dashboard__transactions-list">
-          {recentTransactions.map((transaction, index) => (
-            <div key={index} className="dashboard__transaction">
-              <p>{transaction.description}</p>
-              <p>{transaction.amount}</p>
-              <p>{transaction.date}</p>
-            </div>
-          ))}
-        </div>
+        {savingsPockets.length > 0 && (
+          <button className="show-more-button" onClick={handleShowMorePockets}>
+            Show More
+          </button>
+        )}
       </div>
     </div>
   );
