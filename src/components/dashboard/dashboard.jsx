@@ -34,7 +34,7 @@ function Dashboard() {
         } else {
           fetchTotalBalance(token);
           fetchSavingsPockets(token);
-          fetchRecentTransactions(token);
+          fetchRecentTransactions(token, 'add'); // Fetch recent transactions of type 'add'
         }
       },
       error: (xhr, status, error) => {
@@ -74,14 +74,14 @@ function Dashboard() {
     });
   };
 
-  const fetchRecentTransactions = (token) => {
+  const fetchRecentTransactions = (token, type) => {
     $.ajax({
       url: 'https://geniuspockets.com/get_recent_transactions.php',
       method: 'POST',
-      data: { token },
+      data: { token, type },
       dataType: 'json',
       success: (response) => {
-        setRecentTransactions(response.transactions.slice(0, 3)); // Get only the last three transactions
+        setRecentTransactions(response.transactions);
       },
       error: (xhr, status, error) => {
         console.error('Error fetching recent transactions:', error);
@@ -91,10 +91,6 @@ function Dashboard() {
 
   const handleShowMorePockets = () => {
     navigate('/dashboard/mypockets');
-  };
-
-  const handleAddTransaction = () => {
-    navigate('/dashboard/transaction');
   };
 
   return (
@@ -127,19 +123,17 @@ function Dashboard() {
           </button>
         )}
       </div>
-      <div className="dashboard__transactions">
+      <div className="dashboard__recent-transactions">
         <h2>Recent Transactions</h2>
         <div className="dashboard__transactions-list">
           {recentTransactions.map((transaction, index) => (
             <div key={index} className="dashboard__transaction">
-              <p>{transaction.type}: ${transaction.amount}</p>
+              <p>{transaction.reason}</p>
+              <p>{transaction.amount}</p>
               <p>{transaction.date}</p>
             </div>
           ))}
         </div>
-        <button className="add-transaction-button" onClick={handleAddTransaction}>
-          Add Money
-        </button>
       </div>
     </div>
   );
