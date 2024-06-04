@@ -55,7 +55,7 @@ function AccountSettings() {
                 navigate('/login');
             }
         };
-        localStorage.setItem('username', profile.username);
+        
 
         checkSession();
     }, [navigate]);
@@ -177,6 +177,8 @@ function AccountSettings() {
         .catch(error => setMessage(`Error logging out: ${error.message}`));
     };
 
+    localStorage.setItem('username', profile.username);
+    
     return (
         <div className="container">
             <div className='account__card card'>
