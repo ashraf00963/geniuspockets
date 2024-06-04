@@ -121,11 +121,9 @@ function Dashboard() {
             </div>
           ))}
         </div>
-        {savingsPockets.length > 0 && (
-          <button className="show-more-button" onClick={handleShowMorePockets}>
+        <button className="show-more-button" onClick={handleShowMorePockets}>
             Show More
-          </button>
-        )}
+        </button>
       </div>
       <div className="dashboard__recent-transactions">
         <h2>Recent Transactions</h2>
