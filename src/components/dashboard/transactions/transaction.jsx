@@ -19,13 +19,14 @@ function Transaction() {
 
     const data = {
       token,
-      type,
       reason,
       amount,
     };
 
+    const url = type === 'add' ? 'https://geniuspockets.com/add_money.php' : 'https://geniuspockets.com/withdraw_money.php';
+
     $.ajax({
-      url: 'https://geniuspockets.com/add_transaction.php',
+      url,
       method: 'POST',
       data,
       dataType: 'json',
@@ -33,11 +34,11 @@ function Transaction() {
         if (response.success) {
           navigate('/dashboard');
         } else {
-          console.error('Error adding transaction:', response.message);
+          console.error('Error processing transaction:', response.message);
         }
       },
       error: (xhr, status, error) => {
-        console.error('Error adding transaction:', error);
+        console.error('Error processing transaction:', error);
       }
     });
   };

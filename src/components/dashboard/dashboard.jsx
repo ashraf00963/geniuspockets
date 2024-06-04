@@ -133,7 +133,7 @@ function Dashboard() {
           {recentTransactions.map((transaction, index) => (
             <div key={index} className="dashboard__transaction">
               <p>{transaction.reason}</p>
-              <p>${transaction.amount}</p>
+              <p>{transaction.amount}</p>
               <p>{transaction.date}</p>
             </div>
           ))}
