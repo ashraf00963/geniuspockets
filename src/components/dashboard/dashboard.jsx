@@ -51,7 +51,11 @@ function Dashboard() {
       data: { token },
       dataType: 'json',
       success: (response) => {
-        setTotalBalance(response.total_balance);
+        if (response.success) {
+          setTotalBalance(response.total_balance);
+        } else {
+          console.error('Error fetching total balance:', response.message);
+        }
       },
       error: (xhr, status, error) => {
         console.error('Error fetching total balance:', error);
@@ -78,7 +82,7 @@ function Dashboard() {
     $.ajax({
       url: 'https://geniuspockets.com/get_recent_transactions.php',
       method: 'POST',
-      data: { token },
+      data: { token, type: 'add' },
       dataType: 'json',
       success: (response) => {
         setRecentTransactions(response.transactions.slice(0, 3)); // Get only the last three transactions
