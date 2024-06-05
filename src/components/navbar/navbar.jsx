@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router';
 import './navbar.css';
 import { useEffect, useState } from 'react';
-import $ from 'jquery';
 
 function Navbar() {
     const navigate = useNavigate();
@@ -14,26 +13,27 @@ function Navbar() {
         }
     }, []);
 
-    const checkSession = (token) => {
-        $.ajax({
-            url: 'https://geniuspockets.com/check_auth.php',
-            method: 'POST',
-            data: { token },
-            dataType: 'json',
-            success: (response) => {
-                if (response.authenticated) {
-                    setIsLoggedIn(true);
-                } else {
-                    setIsLoggedIn(false);
-                    localStorage.removeItem('token');
-                }
-            },
-            error: (xhr, status, error) => {
-                console.error('Session check failed:', error);
+    const checkSession = async (token) => {
+        try {
+            const response = await fetch('https://geniuspockets.com/check_auth.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ token }),
+            });
+            const result = await response.json();
+            if (result.authenticated) {
+                setIsLoggedIn(true);
+            } else {
                 setIsLoggedIn(false);
                 localStorage.removeItem('token');
             }
-        });
+        } catch (error) {
+            console.error('Session check failed:', error);
+            setIsLoggedIn(false);
+            localStorage.removeItem('token');
+        }
     };
 
     const handleNaviToIntro = () => {

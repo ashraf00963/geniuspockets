@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import { Charts, Jars, noFee, Logo } from '../../assets/index';
 import './intro.css';
-import $ from 'jquery';
 
 function Intro() {
     const navigate = useNavigate();
@@ -14,22 +13,23 @@ function Intro() {
         }
     }, []);
 
-    const checkSession = (token) => {
-        $.ajax({
-            url: 'https://geniuspockets.com/check_auth.php',
-            method: 'POST',
-            data: { token },
-            dataType: 'json',
-            success: (response) => {
-                if (response.authenticated) {
-                    navigate('/dashboard');
-                }
-            },
-            error: (xhr, status, error) => {
-                console.error('Session check failed:', error);
-                localStorage.removeItem('token');
+    const checkSession = async (token) => {
+        try {
+            const response = await fetch('https://geniuspockets.com/check_auth.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ token }),
+            });
+            const result = await response.json();
+            if (result.authenticated) {
+                navigate('/dashboard');
             }
-        });
+        } catch (error) {
+            console.error('Session check failed:', error);
+            localStorage.removeItem('token');
+        }
     };
 
     return (
