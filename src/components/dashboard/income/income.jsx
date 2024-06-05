@@ -1,14 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
-import './addMoney.css';
+import './income.css';
 
-function AddMoney() {
+function Income() {
   const [reason, setReason] = useState('');
   const [amount, setAmount] = useState('');
+  const [incomes, setIncomes] = useState([]);
   const navigate = useNavigate();
 
-  const handleAddMoney = (e) => {
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+    fetchIncomes(token);
+  }, [navigate]);
+
+  const fetchIncomes = (token) => {
+    $.ajax({
+      url: 'https://geniuspockets.com/get_all_incomes.php',
+      method: 'POST',
+      data: { token },
+      dataType: 'json',
+      success: (response) => {
+        setIncomes(response.incomes);
+      },
+      error: (xhr, status, error) => {
+        console.error('Error fetching incomes:', error);
+      }
+    });
+  };
+
+  const handleAddIncome = (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
     if (!token) {
@@ -16,35 +41,33 @@ function AddMoney() {
       return;
     }
 
-    const data = {
-      token,
-      reason,
-      amount,
-    };
+    const data = { token, reason, amount };
 
     $.ajax({
-      url: 'https://geniuspockets.com/add_money.php',
+      url: 'https://geniuspockets.com/add_income.php',
       method: 'POST',
       data,
       dataType: 'json',
       success: (response) => {
         if (response.success) {
-          navigate('/dashboard');
+          setReason('');
+          setAmount('');
+          fetchIncomes(token);
         } else {
-          console.error('Error adding money:', response.message);
+          console.error('Error adding income:', response.message);
         }
       },
       error: (xhr, status, error) => {
-        console.error('Error adding money:', error);
+        console.error('Error adding income:', error);
       }
     });
   };
 
   return (
-    <div className="add-money">
-      <h2>Add Money</h2>
-      <form onSubmit={handleAddMoney}>
-        <div className="add-money__field">
+    <div className="income">
+      <h2>Income</h2>
+      <form onSubmit={handleAddIncome}>
+        <div className="income__field">
           <label>Reason:</label>
           <input
             type="text"
@@ -53,7 +76,7 @@ function AddMoney() {
             required
           />
         </div>
-        <div className="add-money__field">
+        <div className="income__field">
           <label>Amount:</label>
           <input
             type="number"
@@ -62,10 +85,20 @@ function AddMoney() {
             required
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">Add Income</button>
       </form>
+      <div className="income__list">
+        <h3>All Incomes</h3>
+        {incomes.map((income, index) => (
+          <div key={index} className="income__item">
+            <p>Reason: {income.reason}</p>
+            <p>Amount: {income.amount}</p>
+            <p>Date: {income.date}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
-export default AddMoney;
+export default Income;
