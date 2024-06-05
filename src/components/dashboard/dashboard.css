@@ -133,20 +133,28 @@
     background-color: #2a373a;
     color: #fff;
     border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
 }
 
 .dashboard__transaction p {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    margin-bottom: 0;
 }
 
 .transaction__reason {
     color: #ffd700;
+    width: 20%;
 }
 
 .transaction__date {
     color: #9B0000;
+    width: 40%;
+    text-align: center;
 }
 
 .transaction__amount {
     color: #238500;
+    width: 20%;
+    text-align: end;
 }
