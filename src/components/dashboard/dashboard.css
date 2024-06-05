@@ -19,7 +19,7 @@
 }
 
 .dashboard__overview-cards {
-    background: linear-gradient(90deg, #FFC700 50%, #000000 50%);
+    background: linear-gradient(90deg, #FFC700 50%, #2a373a 50%);
     border-radius: 5px;
     padding: 1rem;
     display: flex;
@@ -41,7 +41,6 @@
 }
 
 .dashboard__card p {
-    color: #1AB700;
     font-size: 1.5rem;
     margin: 0;
 }
@@ -62,13 +61,17 @@
 }
 
 .add-income-button:hover {
-    background-color: #238500;
+    background-color: #1d6901;
 }
 
 .add-expense-button {
     color: #fff;
     background-color: #9B0000;
     border-radius: 5px;
+}
+
+.add-expense-button:hover {
+    background-color: #660101;
 }
 
 .dashboard__savings-pockets {
@@ -91,7 +94,7 @@
 .dashboard__pocket {
     align-self: center;
     background-color: #2a373a;
-    color: #ffd700;
+    color: #fff;
     width: calc(100% - 2rem);
     padding: 1rem;
     border-radius: 5px;
@@ -189,7 +192,7 @@
 }
 
 .transaction__reason {
-    color: #ffd700;
+    color: #fff;
     width: 20%;
 }
 
@@ -200,9 +203,16 @@
 }
 
 .transaction__amount {
-    color: #238500;
     width: 20%;
     text-align: end;
+}
+
+#income {
+    color: #238500;
+}
+
+#expense {
+    color: #9B0000;
 }
 
 .view-transactions-button {

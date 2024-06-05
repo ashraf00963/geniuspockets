@@ -178,7 +178,7 @@ function Dashboard() {
         <h2>Recent Transactions</h2>
         <div className="dashboard__transactions-list">
           {recentAdditions.map((transaction, index) => (
-            <div key={index} className="dashboard__transaction">
+            <div key={index} className="dashboard__transaction" id={transaction.amount < 0 ? 'expense' : 'income'}>
               <div className='transaction__reason'>
                 <p>{transaction.reason}</p>
               </div>
