@@ -9,32 +9,9 @@ function Navbar() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            checkSession(token);
+            setIsLoggedIn(true);
         }
     }, []);
-
-    const checkSession = async (token) => {
-        try {
-            const response = await fetch('https://geniuspockets.com/check_auth.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ token }),
-            });
-            const result = await response.json();
-            if (result.authenticated) {
-                setIsLoggedIn(true);
-            } else {
-                setIsLoggedIn(false);
-                localStorage.removeItem('token');
-            }
-        } catch (error) {
-            console.error('Session check failed:', error);
-            setIsLoggedIn(false);
-            localStorage.removeItem('token');
-        }
-    };
 
     const handleNaviToIntro = () => {
         if (isLoggedIn) {
@@ -42,19 +19,19 @@ function Navbar() {
         } else {
             navigate('/');
         }
-    };
+    }
 
     const handleNaviToLogin = () => {
         navigate('/login');
-    };
+    }
 
     const handleNaviToRegister = () => {
         navigate('/register');
-    };
+    }
 
     const handleNaviToAccountSettings = () => {
         navigate('/account');
-    };
+    }
 
     return (
         <div className='navbar'>
