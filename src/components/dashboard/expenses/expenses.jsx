@@ -68,42 +68,62 @@ function Expenses() {
   };
 
   return (
-    <div className="expenses">
+    <div className="expenses container">
       <h2>All Expenses</h2>
-      <div className="expenses__list">
-        {expenses.map((expense, index) => (
-          <div key={index} className="expense">
-            <p>Reason: {expense.reason}</p>
-            <p>Amount: ${expense.amount}</p>
-            <p>Date: {expense.date}</p>
+      <button onClick={() => setShowAddExpenseForm(true)}>Add Expense</button>
+      {showAddExpenseForm && (
+        <div className="popup">
+          <div className="popup-inner">
+            <h3>Add New Expense</h3>
+            <form className="add-expense-form" onSubmit={handleAddExpense}>
+              <div className="expense__field">
+                <label>Reason:</label>
+                <select value={reason} onChange={(e) => setReason(e.target.value)} required>
+                  <option value="">Select Reason</option>
+                  <option value="food&goods">Food & Goods</option>
+                  <option value="entertainment">Entertainment</option>
+                  <option value="house">House</option>
+                  <option value="extras">Extras</option>
+                  <option value="rent">Rent</option>
+                  <option value="bills">Bills</option>
+                </select>
+              </div>
+              <div className="expense__field">
+                <label>Amount:</label>
+                <input
+                  type="number"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit" className="add-expense-button">Add Expense</button>
+              <button onClick={() => setShowAddExpenseForm(false)}>Close</button>
+            </form>
           </div>
-        ))}
+        </div>
+      )}
+      <div className="expenses__list">
+        <h3>All Expenses</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Reason</th>
+              <th>Amount</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {expenses.map((expense, index) => (
+              <tr key={index}>
+                <td>{expense.reason}</td>
+                <td>${expense.amount}</td>
+                <td>{expense.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      <form className="add-expense-form" onSubmit={handleAddExpense}>
-        <h3>Add New Expense</h3>
-        <div className="expense__field">
-          <label>Reason:</label>
-          <select value={reason} onChange={(e) => setReason(e.target.value)} required>
-            <option value="">Select Reason</option>
-            <option value="food&goods">Food & Goods</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="house">House</option>
-            <option value="extras">Extras</option>
-            <option value="rent">Rent</option>
-            <option value="bills">Bills</option>
-          </select>
-        </div>
-        <div className="expense__field">
-          <label>Amount:</label>
-          <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="add-expense-button">Add Expense</button>
-      </form>
     </div>
   );
 }

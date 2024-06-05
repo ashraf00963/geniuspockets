@@ -64,38 +64,58 @@ function Income() {
   };
 
   return (
-    <div className="income">
+    <div className="income container">
       <h2>Income</h2>
-      <form onSubmit={handleAddIncome}>
-        <div className="income__field">
-          <label>Reason:</label>
-          <input
-            type="text"
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-            required
-          />
+      <button onClick={() => setShowAddIncomeForm(true)}>Add Income</button>
+      {showAddIncomeForm && (
+        <div className="popup">
+          <div className="popup-inner">
+            <h3>Add Income</h3>
+            <form onSubmit={handleAddIncome}>
+              <div className="income__field">
+                <label>Reason:</label>
+                <input
+                  type="text"
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="income__field">
+                <label>Amount:</label>
+                <input
+                  type="number"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  required
+                />
+              </div>
+              <button type="submit">Add Income</button>
+              <button onClick={() => setShowAddIncomeForm(false)}>Close</button>
+            </form>
+          </div>
         </div>
-        <div className="income__field">
-          <label>Amount:</label>
-          <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Add Income</button>
-      </form>
+      )}
       <div className="income__list">
         <h3>All Incomes</h3>
-        {incomes.map((income, index) => (
-          <div key={index} className="income__item">
-            <p>Reason: {income.reason}</p>
-            <p>Amount: {income.amount}</p>
-            <p>Date: {income.date}</p>
-          </div>
-        ))}
+        <table>
+          <thead>
+            <tr>
+              <th>Reason</th>
+              <th>Amount</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {incomes.map((income, index) => (
+              <tr key={index}>
+                <td>{income.reason}</td>
+                <td>{income.amount}</td>
+                <td>{income.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
