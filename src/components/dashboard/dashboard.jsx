@@ -132,13 +132,16 @@ function Dashboard() {
             <h3>Total Balance</h3>
             <p>{totalBalance}€</p>
           </div>
-          <div className='dashboard__trans-btns'>
-            <button className="add-income-button" onClick={handleAddIncome}>
-              Add Income
-            </button>
-            <button className="add-expense-button" onClick={handleAddExpense}>
-              Add Expense
-            </button>
+          <div className='dashboard__card-two'>
+            <p>Add</p>
+            <div className='dashboard__trans-btns'>
+              <button className="add-income-button" onClick={handleAddIncome}>
+                Income
+              </button>
+              <button className="add-expense-button" onClick={handleAddExpense}>
+                Expense
+              </button>
+            </div>
           </div>
         </div>
       </div>
