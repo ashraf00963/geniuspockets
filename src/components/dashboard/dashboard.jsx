@@ -123,14 +123,22 @@ function Dashboard() {
   };
 
   return (
-    <div className="dashboard">
+    <div className="dashboard container">
       <h1>Welcome back {userName},</h1>
       <div className="dashboard__overview">
         <h2>My Dashboard</h2>
         <div className="dashboard__overview-cards">
           <div className="dashboard__card">
             <h3>Total Balance</h3>
-            <p>${totalBalance}</p>
+            <p>{totalBalance}€</p>
+            <div className='dashboard__trans-btns'>
+              <button className="add-income-button" onClick={handleAddIncome}>
+                Add Income
+              </button>
+              <button className="add-expense-button" onClick={handleAddExpense}>
+                Add Expense
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -140,9 +148,25 @@ function Dashboard() {
           {savingsPockets.map((pocket) => (
             <div key={pocket.id} className="dashboard__pocket">
               <h3>{pocket.name}</h3>
-              <p>Goal: ${pocket.goal_amount}</p>
-              <p>Deadline: {pocket.deadline}</p>
-              <p>Saved: ${pocket.saved_amount}</p>
+              <div className='dashboard__pocket-info'>
+                <div className='pocket__goal'>
+                  <p>Goal</p>
+                  <p>
+                    €{pocket.goal_amount.toLocaleString('de-DE', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                  })}
+                  </p>
+                </div>
+                <div className='pocket__deadline'>
+                  <p>Deadline</p>
+                  <p>{pocket.deadline}</p>
+                </div>
+                <div className='pocket__saved'>
+                  <p>Saved</p>
+                  <p>€{pocket.saved_amount}</p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -156,17 +180,12 @@ function Dashboard() {
           {recentAdditions.map((transaction, index) => (
             <div key={index} className="dashboard__transaction">
               <p>{transaction.reason}</p>
-              <p>{transaction.amount}</p>
+              <p>€{transaction.amount}</p>
               <p>{transaction.date}</p>
             </div>
           ))}
         </div>
-        <button className="add-income-button" onClick={handleAddIncome}>
-          Add Income
-        </button>
-        <button className="add-expense-button" onClick={handleAddExpense}>
-          Add Expense
-        </button>
+        
         <button className="view-transactions-button" onClick={handleViewTransactions}>
           View All Transactions
         </button>

@@ -1,52 +1,102 @@
 .dashboard {
-    padding: 20px;
-    margin-top: 5rem;
+    margin-top: 5rem !important;
+    padding: 0 1rem;
+    font-family: "Josefin Sans", sans-serif;
 }
 
-.dashboard__overview,
-.dashboard__savings-pockets,
-.dashboard__recent-transactions {
-    margin-bottom: 20px;
+.dashboard__overview  {
+    margin-top: 2rem;
 }
 
 .dashboard__overview-cards {
-    display: flex;
-    justify-content: space-around;
+    background-color: #2a373a;
+    border-radius: 5px;
+    padding: 1rem;
 }
 
 .dashboard__card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    width: 30%;
-    text-align: center;
+    padding: 0 1rem;
 }
 
-.dashboard__pockets-list,
-.dashboard__transactions-list {
+.dashboard__card h3 {
+    color: #fff;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.dashboard__card p {
+    color: #1AB700;
+    font-size: 1.5rem;
+}
+
+.dashboard__trans-btns {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: flex-end;
 }
 
-.dashboard__pocket,
-.dashboard__transaction {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 10px;
-    width: calc(33.333% - 20px);
+.add-income-button {
+    border-radius: 5px;
+    background-color: #2ca102;
+    color: #fff;
 }
 
-@media (max-width: 768px) {
-    .dashboard__overview-cards,
-    .dashboard__pockets-list,
-    .dashboard__transactions-list {
-        flex-direction: column;
-    }
+.add-income-button:hover {
+    background-color: #238500;
+}
 
-    .dashboard__card,
-    .dashboard__pocket,
-    .dashboard__transaction {
-        width: 100%;
-    }
+.add-expense-button {
+    color: #fff;
+    background-color: #9B0000;
+    border-radius: 5px;
+}
+
+.dashboard__savings-pockets {
+    margin-top: 2rem;
+}
+
+.dashboard__pockets-list {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.dashboard__pocket {
+    align-self: center;
+    background-color: #2a373a;
+    color: #ffd700;
+}
+
+.dashboard__pocket-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.pocket__goal {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffd700;
+    border-radius: 10px;
+    text-align: center;
+    color: #fff;
+}
+
+.pocket__deadline {
+    display: flex;
+    flex-direction: column;
+    background-color: #000;
+    border-radius: 10px;
+    text-align: center;
+    color: #fff;
+}
+
+.pocket__saved {
+    display: flex;
+    flex-direction: column;
+    background-color: #9B0000;
+    border-radius: 10px;
+    text-align: center;
+    color: #fff;
 }
