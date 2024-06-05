@@ -226,3 +226,51 @@
 .view-transactions-button:hover {
     background-color: #B0B0B5;
 }
+
+
+@media screen and (max-width: 700px) {
+    .dashboard__overview-cards {
+        border-radius: 0;
+        padding: 1rem 0;
+    }
+
+    .dashboard__card h3 {
+        font-size: 1.2rem;
+    }
+
+    .dashboard__card p {
+        font-size: 1.2rem;
+    }
+
+    .dashboard__trans-btns button {
+        font-size: 0.8rem;
+    }
+
+    .dashboard__pocket {
+        border-radius: 0;
+    }
+
+    .dashboard__transaction {
+        border-radius: 0;
+    }
+
+    .dashboard__pocket-info {
+        justify-content: space-between;
+    }
+
+    .pocket__deadline {
+        width: 25%;
+    }
+
+    .pocket__goal {
+        width: 25%;
+    }
+
+    .pocket__saved {
+        width: 25%;
+    }
+
+    .pocket__goal p, .pocket__deadline p, .pocket__saved p {
+        font-size: 0.8rem;
+    }
+}
