@@ -1,10 +1,10 @@
+import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import { Charts, Jars, noFee, Logo } from '../../assets/index';
-import { useNavigate } from 'react-router';
 import './intro.css';
+import $ from 'jquery';
 
 function Intro() {
-
     const navigate = useNavigate();
 
     useEffect(() => {
