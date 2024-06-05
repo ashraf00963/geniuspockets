@@ -16,12 +16,12 @@ function Navbar() {
 
     const checkSession = (token) => {
         $.ajax({
-            url: 'https://geniuspockets.com/checkSession.php',
+            url: 'https://geniuspockets.com/check_auth.php',
             method: 'POST',
             data: { token },
             dataType: 'json',
             success: (response) => {
-                if (response.success) {
+                if (response.authenticated) {
                     setIsLoggedIn(true);
                 } else {
                     setIsLoggedIn(false);
