@@ -7,6 +7,7 @@ function Expenses() {
   const [expenses, setExpenses] = useState([]);
   const [reason, setReason] = useState('');
   const [amount, setAmount] = useState('');
+  const [showAddExpenseForm, setShowAddExpenseForm] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,6 +55,7 @@ function Expenses() {
       dataType: 'json',
       success: (response) => {
         if (response.success) {
+          setShowAddExpenseForm(false);
           setReason('');
           setAmount('');
           fetchExpenses(token);

@@ -7,6 +7,7 @@ function Income() {
   const [reason, setReason] = useState('');
   const [amount, setAmount] = useState('');
   const [incomes, setIncomes] = useState([]);
+  const [showAddIncomeForm, setShowAddIncomeForm] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,6 +51,7 @@ function Income() {
       dataType: 'json',
       success: (response) => {
         if (response.success) {
+          setShowAddIncomeForm(false);
           setReason('');
           setAmount('');
           fetchIncomes(token);
