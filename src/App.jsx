@@ -26,9 +26,9 @@ function App() {
         <Route path='/account' element={<AuthCheck><AccountSettings /></AuthCheck>} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/dashboard/mypockets' element={<Pockets />} />
-        <Route path='/dashboard/transaction' element={<Transaction />} /> 
+        <Route path='/dashboard/transactions' element={<Transaction />} /> 
         <Route path='/dashboard/expenses' element={<Expenses />} />
-        <Route path='/dashboard/add-money' element={<Income />} />
+        <Route path='/dashboard/income' element={<Income />} />
       </Routes>
     </Router>
   );
