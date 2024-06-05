@@ -236,7 +236,7 @@ function Pockets() {
       {showAddPocketModal && (
         <div className="modal">
           <div className="modal-content">
-            <span className="close" onClick={() => setShowAddPocketModal(false)}>&times;</span>
+            <span className="close" onClick={() => setShowAddPocketModal(false)}>X</span>
             <form className="add-pocket-form" onSubmit={handleAddPocket}>
               <h3>Add New Pocket</h3>
               <input
@@ -282,7 +282,7 @@ function Pockets() {
       {showEditPocketModal && editingPocket && (
         <div className="modal">
           <div className="modal-content">
-            <span className="close" onClick={() => setShowEditPocketModal(false)}>&times;</span>
+            <span className="close" onClick={() => setShowEditPocketModal(false)}>X</span>
             <form className="edit-pocket-form" onSubmit={handleUpdatePocket}>
               <h3>Edit Pocket</h3>
               <input
@@ -328,7 +328,7 @@ function Pockets() {
       {showAddMoneyModal && (
         <div className="modal">
           <div className="modal-content">
-            <span className="close" onClick={() => setShowAddMoneyModal(false)}>&times;</span>
+            <span className="close" onClick={() => setShowAddMoneyModal(false)}>X</span>
             <form className="add-money-form" onSubmit={handleAddMoney}>
               <h3>Add Money to Pocket</h3>
               <select
@@ -360,10 +360,12 @@ function Pockets() {
       {showDeleteConfirmModal && deletingPocket && (
         <div className="modal">
           <div className="modal-content">
-            <span className="close" onClick={() => setShowDeleteConfirmModal(false)}>&times;</span>
+            <span className="close" onClick={() => setShowDeleteConfirmModal(false)}>X</span>
             <h3>Are you sure you want to delete {deletingPocket.name}?</h3>
-            <button onClick={handleDeletePocket}>Delete</button>
-            <button onClick={() => setShowDeleteConfirmModal(false)}>Cancel</button>
+            <div className='sure--cancel__btns'>
+              <button onClick={handleDeletePocket}>Delete</button>
+              <button onClick={() => setShowDeleteConfirmModal(false)}>Cancel</button>
+            </div>
           </div>
         </div>
       )}
