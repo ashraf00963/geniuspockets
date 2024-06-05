@@ -1,0 +1,13 @@
+.transactions {
+    margin-top: 5rem;
+}
+
+.transaction__item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: #87ceeb;
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
