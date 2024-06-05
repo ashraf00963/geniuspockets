@@ -80,7 +80,7 @@ function Dashboard() {
     $.ajax({
       url: 'https://geniuspockets.com/get_recent_transactions.php',
       method: 'POST',
-      data: { token, type: 'expense' }, // Adjust as needed for your use case
+      data: { token, type: 'transaction' }, // Adjust as needed for your use case
       dataType: 'json',
       success: (response) => {
         setRecentTransactions(response.transactions.slice(0, 3)); // Get only the latest three transactions
@@ -143,7 +143,7 @@ function Dashboard() {
           ))}
         </div>
         <button className="show-more-button" onClick={handleShowMorePockets}>
-          Show More
+            Show More
         </button>
       </div>
       <div className="dashboard__recent-transactions">

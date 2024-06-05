@@ -45,13 +45,11 @@ function Expenses() {
       <h2>Add Expense</h2>
       <form onSubmit={handleAddExpense}>
         <div className="expenses__field">
-          <label>Reason:</label>
+          <label>Category:</label>
           <select value={reason} onChange={(e) => setReason(e.target.value)}>
-            <option value="">Select Reason</option>
-            <option value="food">Food & Goods</option>
+            <option value="food & goods">Food & Goods</option>
             <option value="entertainment">Entertainment</option>
-            <option value="house">House</option>
-            <option value="extras">Extras</option>
+            <option value="house extras">House Extras</option>
             <option value="rent">Rent</option>
             <option value="bills">Bills</option>
           </select>
