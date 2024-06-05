@@ -197,8 +197,8 @@ function Pockets() {
           <p>€{availableBalance}</p>
         </div>
         <div className='pockets__add-btns'>
-          <button onClick={() => setShowAddPocketModal(true)}>Add Pocket</button>
-          <button onClick={() => setShowAddMoneyModal(true)}>Add Money</button>
+          <button onClick={() => setShowAddPocketModal(true)}>New Pocket</button>
+          <button onClick={() => setShowAddMoneyModal(true)}>Save</button>
         </div>
       </div>
 

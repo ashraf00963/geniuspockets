@@ -16,9 +16,17 @@
     font-size: 1.2rem;
 }
 
+.pockets__add-btns {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .pockets__add-btns button {
     font-family: "Josefin Sans", sans-serif;
-    margin: 0 5px;
+    margin: 5px;
+    align-self: flex-end;
 }
 
 .pocket {
