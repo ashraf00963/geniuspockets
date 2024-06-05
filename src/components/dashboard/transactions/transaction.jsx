@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
-import './transactions.css';
+import './transaction.css';
 
 function Transactions() {
   const [transactions, setTransactions] = useState([]);
