@@ -6,7 +6,8 @@ import './dashboard.css';
 function Dashboard() {
   const [totalBalance, setTotalBalance] = useState(0);
   const [savingsPockets, setSavingsPockets] = useState([]);
-  const [recentTransactions, setRecentTransactions] = useState([]);
+  const [recentAdditions, setRecentAdditions] = useState([]);
+  const [recentExpenses, setRecentExpenses] = useState([]);
   const [userName, setUserName] = useState('');
   const navigate = useNavigate();
 
@@ -34,7 +35,8 @@ function Dashboard() {
         } else {
           fetchTotalBalance(token);
           fetchSavingsPockets(token);
-          fetchRecentTransactions(token);
+          fetchRecentAdditions(token);
+          fetchRecentExpenses(token);
         }
       },
       error: (xhr, status, error) => {
@@ -74,17 +76,32 @@ function Dashboard() {
     });
   };
 
-  const fetchRecentTransactions = (token) => {
+  const fetchRecentAdditions = (token) => {
     $.ajax({
       url: 'https://geniuspockets.com/get_recent_transactions.php',
       method: 'POST',
-      data: { token, type: 'expense' }, // Adjust as needed for your use case
+      data: { token, type: 'add' },
       dataType: 'json',
       success: (response) => {
-        setRecentTransactions(response.transactions.slice(0, 3)); // Get only the latest three transactions
+        setRecentAdditions(response.transactions.slice(0, 2)); // Get only the latest two additions
       },
       error: (xhr, status, error) => {
-        console.error('Error fetching recent transactions:', error);
+        console.error('Error fetching recent additions:', error);
+      }
+    });
+  };
+
+  const fetchRecentExpenses = (token) => {
+    $.ajax({
+      url: 'https://geniuspockets.com/get_recent_transactions.php',
+      method: 'POST',
+      data: { token, type: 'expense' },
+      dataType: 'json',
+      success: (response) => {
+        setRecentExpenses(response.transactions.slice(0, 2)); // Get only the latest two expenses
+      },
+      error: (xhr, status, error) => {
+        console.error('Error fetching recent expenses:', error);
       }
     });
   };
@@ -93,11 +110,15 @@ function Dashboard() {
     navigate('/dashboard/mypockets');
   };
 
-  const handleAddTransaction = () => {
-    navigate('/dashboard/transaction');
+  const handleAddIncome = () => {
+    navigate('/dashboard/income');
   };
 
-  const handleShowAllTransactions = () => {
+  const handleAddExpense = () => {
+    navigate('/dashboard/expenses');
+  };
+
+  const handleViewTransactions = () => {
     navigate('/dashboard/transactions');
   };
 
@@ -132,19 +153,22 @@ function Dashboard() {
       <div className="dashboard__recent-transactions">
         <h2>Recent Transactions</h2>
         <div className="dashboard__transactions-list">
-          {recentTransactions.map((transaction, index) => (
+          {recentAdditions.map((transaction, index) => (
             <div key={index} className="dashboard__transaction">
-              <p>{transaction.type === 'add' ? 'Income' : 'Expense'}: {transaction.reason}</p>
+              <p>{transaction.reason}</p>
               <p>{transaction.amount}</p>
               <p>{transaction.date}</p>
             </div>
           ))}
         </div>
-        <button className="show-all-transactions-button" onClick={handleShowAllTransactions}>
-          Show All Transactions
+        <button className="add-income-button" onClick={handleAddIncome}>
+          Add Income
         </button>
-        <button className="add-transaction-button" onClick={handleAddTransaction}>
-          Add Transaction
+        <button className="add-expense-button" onClick={handleAddExpense}>
+          Add Expense
+        </button>
+        <button className="view-transactions-button" onClick={handleViewTransactions}>
+          View All Transactions
         </button>
       </div>
     </div>
