@@ -7,10 +7,14 @@ function Pockets() {
   const [pockets, setPockets] = useState([]);
   const [newPocket, setNewPocket] = useState({ name: '', description: '', goal_amount: '', deadline: '' });
   const [editingPocket, setEditingPocket] = useState(null);
+  const [deletingPocket, setDeletingPocket] = useState(null);
   const [availableBalance, setAvailableBalance] = useState(0);
   const [selectedPocket, setSelectedPocket] = useState('');
   const [addAmount, setAddAmount] = useState('');
   const [showAddMoneyForm, setShowAddMoneyForm] = useState(false);
+  const [showAddPocketModal, setShowAddPocketModal] = useState(false);
+  const [showEditPocketModal, setShowEditPocketModal] = useState(false);
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -70,6 +74,7 @@ function Pockets() {
         if (response.success) {
           setNewPocket({ name: '', description: '', goal_amount: '', deadline: '' });
           fetchPockets(token);
+          setShowAddPocketModal(false);
         } else {
           console.error('Error adding pocket:', response.message);
         }
@@ -80,7 +85,7 @@ function Pockets() {
     });
   };
 
-  const handleDeletePocket = (id) => {
+  const handleDeletePocket = () => {
     const token = localStorage.getItem('token');
     if (!token) {
       navigate('/login');
@@ -90,11 +95,12 @@ function Pockets() {
     $.ajax({
       url: 'https://geniuspockets.com/delete_pocket.php',
       method: 'POST',
-      data: { id, token },
+      data: { id: deletingPocket.id, token },
       dataType: 'json',
       success: (response) => {
         if (response.success) {
           fetchPockets(token);
+          setShowDeleteConfirmModal(false);
         } else {
           console.error('Error deleting pocket:', response.message);
         }
@@ -107,6 +113,7 @@ function Pockets() {
 
   const handleEditPocket = (pocket) => {
     setEditingPocket(pocket);
+    setShowEditPocketModal(true);
   };
 
   const handleUpdatePocket = (e) => {
@@ -126,6 +133,7 @@ function Pockets() {
         if (response.success) {
           setEditingPocket(null);
           fetchPockets(token);
+          setShowEditPocketModal(false);
         } else {
           console.error('Error updating pocket:', response.message);
         }
@@ -181,11 +189,17 @@ function Pockets() {
   };
 
   return (
-    <div className="pockets">
+    <div className="pockets__page container">
       <h2>My Pockets</h2>
-      <p>Available Balance: ${availableBalance}</p>
-      <button onClick={() => setEditingPocket(null)}>Add Pocket</button>
-      <button onClick={() => setShowAddMoneyForm(!showAddMoneyForm)}>Add Money</button>
+      <div className='pockets__page-info'>
+        <div className='pockets__balance'>
+          <p>Available Balance: ${availableBalance}</p>
+        </div>
+        <div className='pockets__add-btns'>
+          <button onClick={() => setShowAddPocketModal(true)}>Add Pocket</button>
+          <button onClick={() => setShowAddMoneyForm(!showAddMoneyForm)}>Add Money</button>
+        </div>
+      </div>
       {showAddMoneyForm && (
         <form className="add-money-form" onSubmit={handleAddMoney}>
           <h3>Add Money to Pocket</h3>
@@ -215,94 +229,119 @@ function Pockets() {
         {pockets.map((pocket) => (
           <div key={pocket.id} className="pocket">
             <h3>{pocket.name}</h3>
-            <p>Description: {pocket.description}</p>
+            {pocket.description && 
+              <p>Description: {pocket.description}</p>
+            }
             <p>Goal: ${pocket.goal_amount}</p>
             <p>Deadline: {pocket.deadline}</p>
             <p>Saved: ${pocket.saved_amount}</p>
             <button onClick={() => handleEditPocket(pocket)}>Edit</button>
-            <button className="delete-button" onClick={() => handleDeletePocket(pocket.id)}>
+            <button className="delete-button" onClick={() => { setDeletingPocket(pocket); setShowDeleteConfirmModal(true); }}>
               Delete
             </button>
           </div>
         ))}
       </div>
 
-      {!editingPocket ? (
-        <form className="add-pocket-form" onSubmit={handleAddPocket}>
-          <h3>Add New Pocket</h3>
-          <input
-            type="text"
-            name="name"
-            value={newPocket.name}
-            onChange={handleChange}
-            placeholder="Name"
-            required
-          />
-          <input
-            type="text"
-            name="description"
-            value={newPocket.description}
-            onChange={handleChange}
-            placeholder="Description"
-            required
-          />
-          <input
-            type="number"
-            name="goal_amount"
-            value={newPocket.goal_amount}
-            onChange={handleChange}
-            placeholder="Goal Amount"
-            required
-          />
-          <input
-            type="date"
-            name="deadline"
-            value={newPocket.deadline}
-            onChange={handleChange}
-            required
-          />
-          <button type="submit" className="add-pocket-button">
-            Add Pocket
-          </button>
-        </form>
-      ) : (
-        <form className="edit-pocket-form" onSubmit={handleUpdatePocket}>
-          <h3>Edit Pocket</h3>
-          <input
-            type="text"
-            name="name"
-            value={editingPocket.name}
-            onChange={handleEditChange}
-            placeholder="Name"
-            required
-          />
-          <input
-            type="text"
-            name="description"
-            value={editingPocket.description}
-            onChange={handleEditChange}
-            placeholder="Description"
-            required
-          />
-          <input
-            type="number"
-            name="goal_amount"
-            value={editingPocket.goal_amount}
-            onChange={handleEditChange}
-            placeholder="Goal Amount"
-            required
-          />
-          <input
-            type="date"
-            name="deadline"
-            value={editingPocket.deadline}
-            onChange={handleEditChange}
-            required
-          />
-          <button type="submit" className="edit-pocket-button">
-            Update Pocket
-          </button>
-        </form>
+      {showAddPocketModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={() => setShowAddPocketModal(false)}>&times;</span>
+            <form className="add-pocket-form" onSubmit={handleAddPocket}>
+              <h3>Add New Pocket</h3>
+              <input
+                type="text"
+                name="name"
+                value={newPocket.name}
+                onChange={handleChange}
+                placeholder="Name"
+                required
+              />
+              <input
+                type="text"
+                name="description"
+                value={newPocket.description}
+                onChange={handleChange}
+                placeholder="Description"
+                required
+              />
+              <input
+                type="number"
+                name="goal_amount"
+                value={newPocket.goal_amount}
+                onChange={handleChange}
+                placeholder="Goal Amount"
+                required
+              />
+              <input
+                type="date"
+                name="deadline"
+                value={newPocket.deadline}
+                onChange={handleChange}
+                required
+              />
+              <button type="submit" className="add-pocket-button">
+                Add Pocket
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {showEditPocketModal && editingPocket && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={() => setShowEditPocketModal(false)}>&times;</span>
+            <form className="edit-pocket-form" onSubmit={handleUpdatePocket}>
+              <h3>Edit Pocket</h3>
+              <input
+                type="text"
+                name="name"
+                value={editingPocket.name}
+                onChange={handleEditChange}
+                placeholder="Name"
+                required
+              />
+              <input
+                type="text"
+                name="description"
+                value={editingPocket.description}
+                onChange={handleEditChange}
+                placeholder="Description"
+                required
+              />
+              <input
+                type="number"
+                name="goal_amount"
+                value={editingPocket.goal_amount}
+                onChange={handleEditChange}
+                placeholder="Goal Amount"
+                required
+              />
+              <input
+                type="date"
+                name="deadline"
+                value={editingPocket.deadline}
+                onChange={handleEditChange}
+                required
+              />
+              <button type="submit" className="edit-pocket-button">
+                Update Pocket
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {showDeleteConfirmModal && deletingPocket && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={() => setShowDeleteConfirmModal(false)}>&times;</span>
+            <h3>Are you sure you want to delete {deletingPocket.name}?</h3>
+            <button onClick={handleDeletePocket}>Yes, Delete</button>
+            <button onClick={() => setShowDeleteConfirmModal(false)}>No, Cancel</button>
+          </div>
+        </div>
       )}
     </div>
   );
