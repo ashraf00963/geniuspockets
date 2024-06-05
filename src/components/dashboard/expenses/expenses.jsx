@@ -72,7 +72,7 @@ function Expenses() {
   return (
     <div className="expenses container">
       <h2>All Expenses</h2>
-      <button onClick={() => setShowAddExpenseForm(true)}>Add Expense</button>
+      <button className="add-expense-button" onClick={() => setShowAddExpenseForm(true)}>Add Expense</button>
       {showAddExpenseForm && (
         <div className="popup">
           <div className="popup-inner">
@@ -100,14 +100,13 @@ function Expenses() {
                 />
               </div>
               <button type="submit" className="add-expense-button">Add Expense</button>
-              <button onClick={() => setShowAddExpenseForm(false)}>Close</button>
+              <button type="button" className="close-button" onClick={() => setShowAddExpenseForm(false)}>Close</button>
             </form>
           </div>
         </div>
       )}
       <div className="expenses__list">
-        <h3>All Expenses</h3>
-        <table>
+        <table className="expenses__table">
           <thead>
             <tr>
               <th>Reason</th>
