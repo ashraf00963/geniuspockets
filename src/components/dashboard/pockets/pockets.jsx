@@ -40,7 +40,7 @@ function Pockets() {
 
   const fetchAvailableBalance = (token) => {
     $.ajax({
-      url: 'https://geniuspockets.com/get_total_balance.php', // Use the endpoint to get the total balance
+      url: 'https://geniuspockets.com/get_total_balance.php',
       method: 'POST',
       data: { token },
       dataType: 'json',
@@ -154,7 +154,7 @@ function Pockets() {
       return;
     }
 
-    if (addAmount > availableBalance) {
+    if (parseFloat(addAmount) > parseFloat(availableBalance)) {
       alert("Insufficient balance to add this amount.");
       return;
     }
