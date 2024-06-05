@@ -193,7 +193,8 @@ function Pockets() {
       <h2>My Pockets</h2>
       <div className='pockets__page-info'>
         <div className='pockets__balance'>
-          <p>Available Balance: ${availableBalance}</p>
+          <p>Available Balance</p>
+          <p>€{availableBalance}</p>
         </div>
         <div className='pockets__add-btns'>
           <button onClick={() => setShowAddPocketModal(true)}>Add Pocket</button>
@@ -208,9 +209,9 @@ function Pockets() {
             {pocket.description && 
               <p>Description: {pocket.description}</p>
             }
-            <p>Goal: ${pocket.goal_amount}</p>
+            <p>Goal: €{pocket.goal_amount}</p>
             <p>Deadline: {pocket.deadline}</p>
-            <p>Saved: ${pocket.saved_amount}</p>
+            <p>Saved: €{pocket.saved_amount}</p>
             <button onClick={() => handleEditPocket(pocket)}>Edit</button>
             <button className="delete-button" onClick={() => { setDeletingPocket(pocket); setShowDeleteConfirmModal(true); }}>
               Delete
