@@ -28,10 +28,10 @@
 }
 
 .dashboard__card {
-    padding: 0 1rem;
     width: 50%;
     text-align: center;
     justify-self: center;
+    font-weight: 900;
 }
 
 .dashboard__card h3 {
@@ -117,7 +117,7 @@
 .pocket__goal {
     display: flex;
     flex-direction: column;
-    background-color: #ffd700;
+    background-color: #FFC700;
     border-radius: 10px;
     text-align: center;
     padding: 0.5rem 0;
@@ -187,7 +187,7 @@
 }
 
 .dashboard__transaction p {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-bottom: 0;
 }
 
@@ -197,7 +197,7 @@
 }
 
 .transaction__date {
-    color: #9B0000;
+    color: #a9a9a9;
     width: 40%;
     text-align: center;
 }
