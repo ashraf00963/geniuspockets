@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
-import './transaction.css';
+import './transactions.css';
 
-function Transaction() {
+function Transactions() {
   const [transactions, setTransactions] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -12,7 +14,7 @@ function Transaction() {
       return;
     }
     fetchTransactions(token);
-  }, []);
+  }, [navigate]);
 
   const fetchTransactions = (token) => {
     $.ajax({
@@ -34,10 +36,11 @@ function Transaction() {
       <h2>All Transactions</h2>
       <div className="transactions__list">
         {transactions.map((transaction, index) => (
-          <div key={index} className={`transaction ${transaction.type}`}>
-            <p>{transaction.type === 'add' ? 'Income' : 'Expense'}: {transaction.reason}</p>
-            <p>{transaction.amount}</p>
-            <p>{transaction.date}</p>
+          <div key={index} className="transaction__item">
+            <p>Type: {transaction.type}</p>
+            <p>Reason: {transaction.reason}</p>
+            <p>Amount: {transaction.amount}</p>
+            <p>Date: {transaction.date}</p>
           </div>
         ))}
       </div>
@@ -45,4 +48,4 @@ function Transaction() {
   );
 }
 
-export default Transaction;
+export default Transactions;
