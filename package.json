@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "jquery": "^3.7.1",
+    "jquery": "npm:jQuery@^1.7.4",
     "jQuery": "^1.7.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
