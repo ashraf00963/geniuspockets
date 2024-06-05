@@ -11,6 +11,7 @@ import Dashboard from './components/dashboard/dashboard';
 import Pockets from './components/dashboard/pockets/pockets';
 import Transaction from './components/dashboard/transactions/transaction';
 import Expenses from './components/dashboard/expenses/expenses';
+import AddMoney from './components/dashboard/addmoney/addmoney';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/dashboard/mypockets' element={<Pockets />} />
         <Route path='/dashboard/transaction' element={<Transaction />} /> 
         <Route path='/dashboard/expenses' element={<Expenses />} />
+        <Route path='/dashboard/add-money' element={<AddMoney />} />
       </Routes>
     </Router>
   );

@@ -1,82 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
-import './transaction.css';
+import './transactions.css';
 
-function Transaction() {
-  const [type, setType] = useState('add');
-  const [reason, setReason] = useState('');
-  const [amount, setAmount] = useState('');
+function Transactions() {
+  const [transactions, setTransactions] = useState([]);
   const navigate = useNavigate();
 
-  const handleTransaction = (e) => {
-    e.preventDefault();
+  useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
       navigate('/login');
       return;
     }
+    fetchTransactions(token);
+  }, [navigate]);
 
-    const data = {
-      token,
-      type,
-      reason,
-      amount,
-    };
-
-    const url = type === 'add' ? 'https://geniuspockets.com/add_money.php' : 'https://geniuspockets.com/withdraw_money.php';
-
+  const fetchTransactions = (token) => {
     $.ajax({
-      url,
+      url: 'https://geniuspockets.com/get_all_transactions.php',
       method: 'POST',
-      data,
+      data: { token },
       dataType: 'json',
       success: (response) => {
-        if (response.success) {
-          navigate('/dashboard');
-        } else {
-          console.error('Error processing transaction:', response.message);
-        }
+        setTransactions(response.transactions);
       },
       error: (xhr, status, error) => {
-        console.error('Error processing transaction:', error);
+        console.error('Error fetching transactions:', error);
       }
     });
   };
 
   return (
-    <div className="transaction">
-      <h2>Add Transaction</h2>
-      <form onSubmit={handleTransaction}>
-        <div className="transaction__field">
-          <label>Type:</label>
-          <select value={type} onChange={(e) => setType(e.target.value)}>
-            <option value="add">Add Money</option>
-            <option value="withdraw">Withdraw</option>
-          </select>
-        </div>
-        <div className="transaction__field">
-          <label>Reason:</label>
-          <input
-            type="text"
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-            required
-          />
-        </div>
-        <div className="transaction__field">
-          <label>Amount:</label>
-          <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+    <div className="transactions">
+      <h2>All Transactions</h2>
+      <div className="transactions__list">
+        {transactions.map((transaction, index) => (
+          <div key={index} className="transaction">
+            <p>Type: {transaction.type}</p>
+            <p>Reason: {transaction.reason}</p>
+            <p>Amount: ${transaction.amount}</p>
+            <p>Date: {transaction.date}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
-export default Transaction;
+export default Transactions;
