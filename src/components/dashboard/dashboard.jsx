@@ -98,7 +98,7 @@ function Dashboard() {
       data: { token },
       dataType: 'json',
       success: (response) => {
-        setRecentExpenses(response.expenses.slice(0, 3)); // Get only the latest three expenses
+        setRecentExpenses(response.expenses.slice(0, 2)); // Get only the latest two expenses
       },
       error: (xhr, status, error) => {
         console.error('Error fetching recent expenses:', error);
@@ -143,7 +143,7 @@ function Dashboard() {
           ))}
         </div>
         <button className="show-more-button" onClick={handleShowMorePockets}>
-            Show More
+          Show More
         </button>
       </div>
       <div className="dashboard__recent-transactions">

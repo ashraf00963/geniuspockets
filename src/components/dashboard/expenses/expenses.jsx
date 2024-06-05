@@ -1,14 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
 import './expenses.css';
 
 function Expenses() {
-  const [reason, setReason] = useState('');
+  const [reason, setReason] = useState('food & goods');
   const [amount, setAmount] = useState('');
+  const [expenses, setExpenses] = useState([]);
   const navigate = useNavigate();
 
-  const handleAddExpense = (e) => {
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+    fetchExpenses(token);
+  }, [navigate]);
+
+  const fetchExpenses = (token) => {
+    $.ajax({
+      url: 'https://geniuspockets.com/get_all_expenses.php',
+      method: 'POST',
+      data: { token },
+      dataType: 'json',
+      success: (response) => {
+        setExpenses(response.expenses);
+      },
+      error: (xhr, status, error) => {
+        console.error('Error fetching expenses:', error);
+      }
+    });
+  };
+
+  const handleExpense = (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
     if (!token) {
@@ -29,7 +54,7 @@ function Expenses() {
       dataType: 'json',
       success: (response) => {
         if (response.success) {
-          navigate('/dashboard');
+          fetchExpenses(token);
         } else {
           console.error('Error adding expense:', response.message);
         }
@@ -42,8 +67,8 @@ function Expenses() {
 
   return (
     <div className="expenses">
-      <h2>Add Expense</h2>
-      <form onSubmit={handleAddExpense}>
+      <h2>Expenses</h2>
+      <form onSubmit={handleExpense}>
         <div className="expenses__field">
           <label>Category:</label>
           <select value={reason} onChange={(e) => setReason(e.target.value)}>
@@ -65,6 +90,16 @@ function Expenses() {
         </div>
         <button type="submit">Submit</button>
       </form>
+      <div className="expenses__list">
+        <h3>All Expenses</h3>
+        {expenses.map((expense, index) => (
+          <div key={index} className="expense">
+            <p>Category: {expense.reason}</p>
+            <p>Amount: ${expense.amount}</p>
+            <p>Date: {expense.date}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
