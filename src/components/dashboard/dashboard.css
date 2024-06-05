@@ -69,6 +69,7 @@
     width: calc(100% - 2rem);
     padding: 1rem;
     border-radius: 5px;
+    margin-bottom: 1rem;
 }
 
 .dashboard__pocket h3 {
@@ -123,4 +124,29 @@
 
 .show-more-button {
     margin-top: 1rem !important;
+}
+
+.dashboard__transaction {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #2a373a;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.dashboard__transaction p {
+    font-size: 1.5rem;
+}
+
+.transaction__reason {
+    color: #ffd700;
+}
+
+.transaction__date {
+    color: #9B0000;
+}
+
+.transaction__amount {
+    color: #238500;
 }

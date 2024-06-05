@@ -179,9 +179,15 @@ function Dashboard() {
         <div className="dashboard__transactions-list">
           {recentAdditions.map((transaction, index) => (
             <div key={index} className="dashboard__transaction">
-              <p>{transaction.reason}</p>
-              <p>€{transaction.amount}</p>
-              <p>{transaction.date}</p>
+              <div className='transaction__reason'>
+                <p>{transaction.reason}</p>
+              </div>
+              <div className='transaction__date'>
+                <p>{transaction.date}</p>
+              </div>
+              <div className='transaction__amount'>
+                <p>€{transaction.amount}</p>
+              </div>
             </div>
           ))}
         </div>
