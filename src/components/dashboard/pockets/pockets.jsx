@@ -11,7 +11,7 @@ function Pockets() {
   const [availableBalance, setAvailableBalance] = useState(0);
   const [selectedPocket, setSelectedPocket] = useState('');
   const [addAmount, setAddAmount] = useState('');
-  const [showAddMoneyForm, setShowAddMoneyForm] = useState(false);
+  const [showAddMoneyModal, setShowAddMoneyModal] = useState(false);
   const [showAddPocketModal, setShowAddPocketModal] = useState(false);
   const [showEditPocketModal, setShowEditPocketModal] = useState(false);
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
@@ -174,7 +174,7 @@ function Pockets() {
       dataType: 'json',
       success: (response) => {
         if (response.success) {
-          setShowAddMoneyForm(false);
+          setShowAddMoneyModal(false);
           setAddAmount('');
           fetchPockets(token);
           fetchAvailableBalance(token);
@@ -197,34 +197,10 @@ function Pockets() {
         </div>
         <div className='pockets__add-btns'>
           <button onClick={() => setShowAddPocketModal(true)}>Add Pocket</button>
-          <button onClick={() => setShowAddMoneyForm(!showAddMoneyForm)}>Add Money</button>
+          <button onClick={() => setShowAddMoneyModal(true)}>Add Money</button>
         </div>
       </div>
-      {showAddMoneyForm && (
-        <form className="add-money-form" onSubmit={handleAddMoney}>
-          <h3>Add Money to Pocket</h3>
-          <select
-            value={selectedPocket}
-            onChange={(e) => setSelectedPocket(e.target.value)}
-            required
-          >
-            <option value="">Select Pocket</option>
-            {pockets.map((pocket) => (
-              <option key={pocket.id} value={pocket.id}>
-                {pocket.name}
-              </option>
-            ))}
-          </select>
-          <input
-            type="number"
-            value={addAmount}
-            onChange={(e) => setAddAmount(e.target.value)}
-            placeholder="Amount"
-            required
-          />
-          <button type="submit">Add Money</button>
-        </form>
-      )}
+
       <div className="pockets__list">
         {pockets.map((pocket) => (
           <div key={pocket.id} className="pocket">
@@ -328,6 +304,37 @@ function Pockets() {
               <button type="submit" className="edit-pocket-button">
                 Update Pocket
               </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {showAddMoneyModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={() => setShowAddMoneyModal(false)}>&times;</span>
+            <form className="add-money-form" onSubmit={handleAddMoney}>
+              <h3>Add Money to Pocket</h3>
+              <select
+                value={selectedPocket}
+                onChange={(e) => setSelectedPocket(e.target.value)}
+                required
+              >
+                <option value="">Select Pocket</option>
+                {pockets.map((pocket) => (
+                  <option key={pocket.id} value={pocket.id}>
+                    {pocket.name}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="number"
+                value={addAmount}
+                onChange={(e) => setAddAmount(e.target.value)}
+                placeholder="Amount"
+                required
+              />
+              <button type="submit">Add Money</button>
             </form>
           </div>
         </div>
