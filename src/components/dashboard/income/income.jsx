@@ -67,13 +67,13 @@ function Income() {
 
   return (
     <div className="income container">
-      <h2>Income</h2>
-      <button onClick={() => setShowAddIncomeForm(true)}>Add Income</button>
+      <h2>All Incomes</h2>
+      <button className="add-income-button" onClick={() => setShowAddIncomeForm(true)}>Add Income</button>
       {showAddIncomeForm && (
         <div className="popup">
           <div className="popup-inner">
-            <h3>Add Income</h3>
-            <form onSubmit={handleAddIncome}>
+            <h3>Add New Income</h3>
+            <form className="add-income-form" onSubmit={handleAddIncome}>
               <div className="income__field">
                 <label>Reason:</label>
                 <input
@@ -92,15 +92,14 @@ function Income() {
                   required
                 />
               </div>
-              <button type="submit">Add Income</button>
-              <button onClick={() => setShowAddIncomeForm(false)}>Close</button>
+              <button type="submit" className="add-income-button">Add Income</button>
+              <button type="button" className="close-button" onClick={() => setShowAddIncomeForm(false)}>Close</button>
             </form>
           </div>
         </div>
       )}
       <div className="income__list">
-        <h3>All Incomes</h3>
-        <table>
+        <table className="income__table">
           <thead>
             <tr>
               <th>Reason</th>
@@ -112,7 +111,7 @@ function Income() {
             {incomes.map((income, index) => (
               <tr key={index}>
                 <td>{income.reason}</td>
-                <td>{income.amount}</td>
+                <td>${income.amount}</td>
                 <td>{income.date}</td>
               </tr>
             ))}

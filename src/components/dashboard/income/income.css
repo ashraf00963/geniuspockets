@@ -1,5 +1,27 @@
 .income {
-    margin-top: 5rem !important;
+  padding: 20px;
+  margin-top: 5rem !important;
+}
+
+.income h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.add-income-button {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-income-button:hover {
+  background-color: #0056b3;
 }
 
 .popup {
@@ -35,4 +57,38 @@
   margin-top: 10px;
   margin-right: 10px;
 }
+
+.close-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.close-button:hover {
+  background-color: #c82333;
+}
+
+.income__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.income__table th,
+.income__table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.income__table th {
+  background-color: #f4f4f4;
+  text-align: left;
+}
+
+.income__table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.income__table tr:hover {
+  background-color: #f1f1f1;
+}
+  
   
