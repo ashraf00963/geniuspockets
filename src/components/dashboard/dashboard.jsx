@@ -7,6 +7,7 @@ function Dashboard() {
   const [totalBalance, setTotalBalance] = useState(0);
   const [savingsPockets, setSavingsPockets] = useState([]);
   const [recentTransactions, setRecentTransactions] = useState([]);
+  const [recentExpenses, setRecentExpenses] = useState([]);
   const [userName, setUserName] = useState('');
   const navigate = useNavigate();
 
@@ -35,6 +36,7 @@ function Dashboard() {
           fetchTotalBalance(token);
           fetchSavingsPockets(token);
           fetchRecentTransactions(token);
+          fetchRecentExpenses(token);
         }
       },
       error: (xhr, status, error) => {
@@ -89,12 +91,31 @@ function Dashboard() {
     });
   };
 
+  const fetchRecentExpenses = (token) => {
+    $.ajax({
+      url: 'https://geniuspockets.com/get_recent_expenses.php',
+      method: 'POST',
+      data: { token },
+      dataType: 'json',
+      success: (response) => {
+        setRecentExpenses(response.expenses.slice(0, 3)); // Get only the latest three expenses
+      },
+      error: (xhr, status, error) => {
+        console.error('Error fetching recent expenses:', error);
+      }
+    });
+  };
+
   const handleShowMorePockets = () => {
     navigate('/dashboard/mypockets');
   };
 
   const handleAddTransaction = () => {
     navigate('/dashboard/transaction');
+  };
+
+  const handleAddExpense = () => {
+    navigate('/dashboard/expenses');
   };
 
   return (
@@ -122,7 +143,7 @@ function Dashboard() {
           ))}
         </div>
         <button className="show-more-button" onClick={handleShowMorePockets}>
-            Show More
+          Show More
         </button>
       </div>
       <div className="dashboard__recent-transactions">
@@ -138,6 +159,21 @@ function Dashboard() {
         </div>
         <button className="add-transaction-button" onClick={handleAddTransaction}>
           Add Transaction
+        </button>
+      </div>
+      <div className="dashboard__recent-expenses">
+        <h2>Recent Expenses</h2>
+        <div className="dashboard__expenses-list">
+          {recentExpenses.map((expense, index) => (
+            <div key={index} className="dashboard__expense">
+              <p>{expense.reason}</p>
+              <p>{expense.amount}</p>
+              <p>{expense.date}</p>
+            </div>
+          ))}
+        </div>
+        <button className="add-expense-button" onClick={handleAddExpense}>
+          Add Expense
         </button>
       </div>
     </div>
