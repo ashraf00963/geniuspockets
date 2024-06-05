@@ -22,7 +22,6 @@
     background: linear-gradient(90deg, #FFC700 50%, #000000 50%);
     border-radius: 5px;
     padding: 1rem;
-    margin: 0 1rem;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -78,6 +77,11 @@
     flex-direction: column;
 }
 
+.dashboard__savings-pockets h2 {
+    margin-left: 1rem;
+    margin-bottom: 0;
+}
+
 .dashboard__pockets-list {
     display: flex;
     flex-direction: column;
@@ -92,12 +96,13 @@
     padding: 1rem;
     border-radius: 5px;
     margin: 1rem;
+    margin-bottom: 0;
 }
 
 .dashboard__pocket h3 {
     margin: 0;
     margin-bottom: 1rem;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .dashboard__pocket-info {
@@ -112,8 +117,8 @@
     background-color: #ffd700;
     border-radius: 10px;
     text-align: center;
+    padding: 0.5rem 0;
     color: #fff;
-    padding: 1rem;
     width: 20%;
 }
 
@@ -123,8 +128,8 @@
     background-color: #000;
     border-radius: 10px;
     text-align: center;
+    padding: 0.5rem 0;
     color: #fff;
-    padding: 1rem;
     width: 20%;
 }
 
@@ -134,24 +139,37 @@
     background-color: #9B0000;
     border-radius: 10px;
     text-align: center;
+    padding: 0.5rem 0;
     color: #fff;
-    padding: 1rem;
     width: 20%;
 }
 
 .pocket__goal p, .pocket__deadline p, .pocket__saved p {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: 0;
 }
 
 .show-more-button {
     margin-top: 1rem !important;
     align-self: center;
+    background-color: #fff;
+    border-radius: 5px;
+    color: #002855;
+    font-family: Josefin Sans, sans-serif;
+}
+
+.show-more-button:hover {
+    background-color: #B0B0B5;
 }
 
 .dashboard__recent-transactions {
     display: flex;
     flex-direction: column;
+}
+
+.dashboard__recent-transactions h2 {
+    margin-bottom: 0;
+    margin-left: 1rem;
 }
 
 .dashboard__transaction {
@@ -162,7 +180,7 @@
     color: #fff;
     border-radius: 5px;
     padding: 1rem;
-    margin: 1rem;
+    margin: 1rem 0;
 }
 
 .dashboard__transaction p {
@@ -189,4 +207,12 @@
 
 .view-transactions-button {
     align-self: center;
+    background-color: #fff;
+    border-radius: 5px;
+    color: #002855;
+    font-family: Josefin Sans, sans-serif;
+}
+
+.view-transactions-button:hover {
+    background-color: #B0B0B5;
 }
