@@ -11,7 +11,7 @@ import Dashboard from './components/dashboard/dashboard';
 import Pockets from './components/dashboard/pockets/pockets';
 import Transaction from './components/dashboard/transactions/transaction';
 import Expenses from './components/dashboard/expenses/expenses';
-import AddMoney from './components/dashboard/addmoney/addmoney';
+import AddMoney from './components/dashboard/income/income';
 
 function App() {
   return (

@@ -110,12 +110,16 @@ function Dashboard() {
     navigate('/dashboard/mypockets');
   };
 
-  const handleAddMoney = () => {
-    navigate('/dashboard/add-money');
+  const handleAddIncome = () => {
+    navigate('/dashboard/income');
   };
 
   const handleAddExpense = () => {
     navigate('/dashboard/expenses');
+  };
+
+  const handleViewTransactions = () => {
+    navigate('/dashboard/transactions');
   };
 
   return (
@@ -151,24 +155,27 @@ function Dashboard() {
         <div className="dashboard__transactions-list">
           {recentAdditions.map((transaction, index) => (
             <div key={index} className="dashboard__transaction">
-              <p>{transaction.reason}</p>
+              <p>Income: {transaction.reason}</p>
               <p>{transaction.amount}</p>
               <p>{transaction.date}</p>
             </div>
           ))}
           {recentExpenses.map((transaction, index) => (
             <div key={index} className="dashboard__transaction">
-              <p>{transaction.reason}</p>
+              <p>Expense: {transaction.reason}</p>
               <p>{transaction.amount}</p>
               <p>{transaction.date}</p>
             </div>
           ))}
         </div>
-        <button className="add-money-button" onClick={handleAddMoney}>
-          Add Money
+        <button className="add-income-button" onClick={handleAddIncome}>
+          Add Income
         </button>
         <button className="add-expense-button" onClick={handleAddExpense}>
           Add Expense
+        </button>
+        <button className="view-transactions-button" onClick={handleViewTransactions}>
+          View All Transactions
         </button>
       </div>
     </div>
