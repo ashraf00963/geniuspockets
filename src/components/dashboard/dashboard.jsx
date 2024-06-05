@@ -6,8 +6,7 @@ import './dashboard.css';
 function Dashboard() {
   const [totalBalance, setTotalBalance] = useState(0);
   const [savingsPockets, setSavingsPockets] = useState([]);
-  const [recentAdditions, setRecentAdditions] = useState([]);
-  const [recentExpenses, setRecentExpenses] = useState([]);
+  const [recentTransactions, setRecentTransactions] = useState([]);
   const [userName, setUserName] = useState('');
   const navigate = useNavigate();
 
@@ -35,8 +34,7 @@ function Dashboard() {
         } else {
           fetchTotalBalance(token);
           fetchSavingsPockets(token);
-          fetchRecentAdditions(token);
-          fetchRecentExpenses(token);
+          fetchRecentTransactions(token);
         }
       },
       error: (xhr, status, error) => {
@@ -76,32 +74,17 @@ function Dashboard() {
     });
   };
 
-  const fetchRecentAdditions = (token) => {
+  const fetchRecentTransactions = (token) => {
     $.ajax({
       url: 'https://geniuspockets.com/get_recent_transactions.php',
       method: 'POST',
-      data: { token, type: 'add' },
+      data: { token, type: 'expense' }, // Adjust as needed for your use case
       dataType: 'json',
       success: (response) => {
-        setRecentAdditions(response.transactions.slice(0, 2)); // Get only the latest two additions
+        setRecentTransactions(response.transactions.slice(0, 3)); // Get only the latest three transactions
       },
       error: (xhr, status, error) => {
-        console.error('Error fetching recent additions:', error);
-      }
-    });
-  };
-
-  const fetchRecentExpenses = (token) => {
-    $.ajax({
-      url: 'https://geniuspockets.com/get_recent_transactions.php',
-      method: 'POST',
-      data: { token, type: 'expense' },
-      dataType: 'json',
-      success: (response) => {
-        setRecentExpenses(response.transactions.slice(0, 2)); // Get only the latest two expenses
-      },
-      error: (xhr, status, error) => {
-        console.error('Error fetching recent expenses:', error);
+        console.error('Error fetching recent transactions:', error);
       }
     });
   };
@@ -110,15 +93,11 @@ function Dashboard() {
     navigate('/dashboard/mypockets');
   };
 
-  const handleAddIncome = () => {
-    navigate('/dashboard/income');
+  const handleAddTransaction = () => {
+    navigate('/dashboard/transaction');
   };
 
-  const handleAddExpense = () => {
-    navigate('/dashboard/expenses');
-  };
-
-  const handleViewTransactions = () => {
+  const handleShowAllTransactions = () => {
     navigate('/dashboard/transactions');
   };
 
@@ -153,29 +132,19 @@ function Dashboard() {
       <div className="dashboard__recent-transactions">
         <h2>Recent Transactions</h2>
         <div className="dashboard__transactions-list">
-          {recentAdditions.map((transaction, index) => (
+          {recentTransactions.map((transaction, index) => (
             <div key={index} className="dashboard__transaction">
-              <p>Income: {transaction.reason}</p>
-              <p>{transaction.amount}</p>
-              <p>{transaction.date}</p>
-            </div>
-          ))}
-          {recentExpenses.map((transaction, index) => (
-            <div key={index} className="dashboard__transaction">
-              <p>Expense: {transaction.reason}</p>
+              <p>{transaction.type === 'add' ? 'Income' : 'Expense'}: {transaction.reason}</p>
               <p>{transaction.amount}</p>
               <p>{transaction.date}</p>
             </div>
           ))}
         </div>
-        <button className="add-income-button" onClick={handleAddIncome}>
-          Add Income
+        <button className="show-all-transactions-button" onClick={handleShowAllTransactions}>
+          Show All Transactions
         </button>
-        <button className="add-expense-button" onClick={handleAddExpense}>
-          Add Expense
-        </button>
-        <button className="view-transactions-button" onClick={handleViewTransactions}>
-          View All Transactions
+        <button className="add-transaction-button" onClick={handleAddTransaction}>
+          Add Transaction
         </button>
       </div>
     </div>
