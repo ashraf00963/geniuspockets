@@ -14,11 +14,7 @@ function Navbar() {
     }, []);
 
     const handleNaviToIntro = () => {
-        if (isLoggedIn) {
-            navigate('/dashboard');
-        } else {
-            navigate('/');
-        }
+        navigate('/');
     }
 
     const handleNaviToLogin = () => {
@@ -53,3 +49,4 @@ function Navbar() {
 }
 
 export default Navbar;
+
