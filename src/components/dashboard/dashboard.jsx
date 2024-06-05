@@ -124,21 +124,21 @@ function Dashboard() {
 
   return (
     <div className="dashboard container">
-      <h1>Welcome back {userName},</h1>
+      <h1>Welcome back {userName}</h1>
       <div className="dashboard__overview">
         <h2>My Dashboard</h2>
         <div className="dashboard__overview-cards">
           <div className="dashboard__card">
             <h3>Total Balance</h3>
             <p>{totalBalance}€</p>
-            <div className='dashboard__trans-btns'>
-              <button className="add-income-button" onClick={handleAddIncome}>
-                Add Income
-              </button>
-              <button className="add-expense-button" onClick={handleAddExpense}>
-                Add Expense
-              </button>
-            </div>
+          </div>
+          <div className='dashboard__trans-btns'>
+            <button className="add-income-button" onClick={handleAddIncome}>
+              Add Income
+            </button>
+            <button className="add-expense-button" onClick={handleAddExpense}>
+              Add Expense
+            </button>
           </div>
         </div>
       </div>
