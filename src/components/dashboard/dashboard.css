@@ -242,6 +242,10 @@
         font-size: 1.2rem;
     }
 
+    .dashboard__trans-btns {
+        flex-direction: column;
+    }
+
     .dashboard__trans-btns button {
         font-size: 0.8rem;
     }
@@ -272,5 +276,36 @@
 
     .pocket__goal p, .pocket__deadline p, .pocket__saved p {
         font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width:450px) {
+    .dashboard__transaction {
+        padding: 0.2rem;
+        flex-direction: column;
+    }
+
+    .transaction__amount {
+        width: auto;
+    }
+
+    .transaction__date {
+        width: auto;
+    }
+
+    .transaction__reason {
+        width: auto;
+    }
+
+    .pocket__deadline {
+        width: 30%;
+    }
+
+    .pocket__goal {
+        width: 30%;
+    }
+
+    .pocket__saved {
+        width: 30%;
     }
 }
