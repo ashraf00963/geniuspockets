@@ -264,6 +264,7 @@ function Pockets() {
                 required
               />
               <input
+                className='pocket__date-input'
                 type="date"
                 name="deadline"
                 value={newPocket.deadline}
@@ -309,6 +310,7 @@ function Pockets() {
                 required
               />
               <input
+                className='pocket__date-input'
                 type="date"
                 name="deadline"
                 value={editingPocket.deadline}
@@ -330,6 +332,7 @@ function Pockets() {
             <form className="add-money-form" onSubmit={handleAddMoney}>
               <h3>Add Money to Pocket</h3>
               <select
+                className='pocket__date-input'
                 value={selectedPocket}
                 onChange={(e) => setSelectedPocket(e.target.value)}
                 required
@@ -348,7 +351,7 @@ function Pockets() {
                 placeholder="Amount"
                 required
               />
-              <button type="submit">Add Money</button>
+              <button className='pockets__add-money' type="submit">Add Money</button>
             </form>
           </div>
         </div>
@@ -359,8 +362,8 @@ function Pockets() {
           <div className="modal-content">
             <span className="close" onClick={() => setShowDeleteConfirmModal(false)}>&times;</span>
             <h3>Are you sure you want to delete {deletingPocket.name}?</h3>
-            <button onClick={handleDeletePocket}>Yes, Delete</button>
-            <button onClick={() => setShowDeleteConfirmModal(false)}>No, Cancel</button>
+            <button onClick={handleDeletePocket}>Delete</button>
+            <button onClick={() => setShowDeleteConfirmModal(false)}>Cancel</button>
           </div>
         </div>
       )}

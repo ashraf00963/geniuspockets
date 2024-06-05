@@ -28,11 +28,12 @@
     margin-bottom: 1rem;
     padding: 1rem;
     border-radius: 5px;
+    background-color: #87ceeb;
 }
 
 .pocket h3 {
     margin-top: 0;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: #2a373a;
 }
 
@@ -43,6 +44,7 @@
     align-items: center;
     width: 100%;
     background-color: #2a373a;
+    border-radius: 5px;
 }
 
 .pocket p {
@@ -53,11 +55,13 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin-top: 1rem;
 }
 
 .edit-button {
     background-color: #000;
     color: #fff;
+    border-radius: 5px;
 }
 
 .modal {
@@ -88,6 +92,7 @@
   float: right;
   font-size: 28px;
   font-weight: bold;
+  height: fit-content;
 }
 
 .close:hover,
@@ -111,6 +116,7 @@
 
 .delete-button {
   color: red;
+  border-radius: 5px;
 }
 
 .pockets__page-info {
@@ -118,4 +124,32 @@
   justify-content: space-between;
   align-items: center;
 }
-  
+
+.add-pocket-form h3 {
+    margin-top: 0;
+}
+
+.pocket__date-input {
+    padding: 0.5rem;
+    font-family: "Josefin Sans", sans-serif;
+    border: 1px solid #888888cc;
+}
+
+.edit-pocket-form h3 {
+    margin-top: 0;
+}
+
+.edit-pocket-button, .edit-pocket-button, .pockets__add-money {
+    font-family: Josefin Sans, sans-serif;
+    margin-top: 0.5rem;
+}
+
+.edit-pocket-button:hover,
+.edit-pocket-button:hover,
+.pockets__add-money:hover {
+    background-color: #bebebe;
+}
+
+.add-money-form h3 {
+    margin-top: 0;
+}
