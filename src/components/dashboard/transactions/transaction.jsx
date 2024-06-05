@@ -34,28 +34,26 @@ function Transactions() {
   return (
     <div className="transactions">
       <h2>All Transactions</h2>
-      <div className="transactions__list">
-        {transactions.map((transaction, index) => (
-          <div key={index} className="transaction__item">
-            <div className='trans__type'>
-              <p>Type</p>
-              <p>{transaction.type}</p>
-            </div>
-            <div className='trans__reason'>
-              <p>Reason</p>
-              <p>{transaction.reason}</p>
-            </div>
-            <div className='trans__amount'>
-              <p>Amount</p>
-              <p>{transaction.amount}</p>
-            </div>
-            <div className='trans__date'>
-              <p>Date</p>
-              <p>{transaction.date}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+      <table className="transactions__table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Reason</th>
+            <th>Amount</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {transactions.map((transaction, index) => (
+            <tr key={index} className={transaction.amount < 0 ? 'expense' : 'income'}>
+              <td>{transaction.type}</td>
+              <td>{transaction.reason}</td>
+              <td>€{transaction.amount}</td>
+              <td>{transaction.date}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

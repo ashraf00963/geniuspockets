@@ -1,13 +1,35 @@
 .transactions {
-    margin-top: 5rem;
+  margin: 20px;
 }
 
-.transaction__item {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    background-color: #87ceeb;
-    border-radius: 5px;
-    padding: 1rem;
-    margin-bottom: 1rem;
+.transactions__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transactions__table th,
+.transactions__table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.transactions__table th {
+  background-color: #f2f2f2;
+}
+
+.transactions__table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.transactions__table tr:hover {
+  background-color: #ddd;
+}
+
+.transactions__table .income {
+  color: green;
+}
+
+.transactions__table .expense {
+  color: red;
 }
