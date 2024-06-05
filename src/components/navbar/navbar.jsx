@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 import './navbar.css';
 import { useEffect, useState } from 'react';
+import $ from 'jquery';
 
 function Navbar() {
     const navigate = useNavigate();
@@ -9,9 +10,31 @@ function Navbar() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            setIsLoggedIn(true);
+            checkSession(token);
         }
     }, []);
+
+    const checkSession = (token) => {
+        $.ajax({
+            url: 'https://geniuspockets.com/checkSession.php',
+            method: 'POST',
+            data: { token },
+            dataType: 'json',
+            success: (response) => {
+                if (response.success) {
+                    setIsLoggedIn(true);
+                } else {
+                    setIsLoggedIn(false);
+                    localStorage.removeItem('token');
+                }
+            },
+            error: (xhr, status, error) => {
+                console.error('Session check failed:', error);
+                setIsLoggedIn(false);
+                localStorage.removeItem('token');
+            }
+        });
+    };
 
     const handleNaviToIntro = () => {
         if (isLoggedIn) {
@@ -19,19 +42,19 @@ function Navbar() {
         } else {
             navigate('/');
         }
-    }
+    };
 
     const handleNaviToLogin = () => {
         navigate('/login');
-    }
+    };
 
     const handleNaviToRegister = () => {
         navigate('/register');
-    }
+    };
 
     const handleNaviToAccountSettings = () => {
         navigate('/account');
-    }
+    };
 
     return (
         <div className='navbar'>

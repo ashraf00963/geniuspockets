@@ -10,9 +10,27 @@ function Intro() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            navigate('/dashboard');
+            checkSession(token);
         }
-    }, [navigate]);
+    }, []);
+
+    const checkSession = (token) => {
+        $.ajax({
+            url: 'https://geniuspockets.com/checkSession.php',
+            method: 'POST',
+            data: { token },
+            dataType: 'json',
+            success: (response) => {
+                if (response.success) {
+                    navigate('/dashboard');
+                }
+            },
+            error: (xhr, status, error) => {
+                console.error('Session check failed:', error);
+                localStorage.removeItem('token');
+            }
+        });
+    };
 
     return (
         <div className='intro__page container'>
