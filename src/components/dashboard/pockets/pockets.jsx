@@ -6,11 +6,11 @@ import './pockets.css';
 function Pockets() {
   const [pockets, setPockets] = useState([]);
   const [newPocket, setNewPocket] = useState({ name: '', description: '', goal_amount: '', deadline: '' });
-  const [editPocket, setEditPocket] = useState(null);
-  const [totalBalance, setTotalBalance] = useState(0);
+  const [editingPocket, setEditingPocket] = useState(null);
   const [availableBalance, setAvailableBalance] = useState(0);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [showEditForm, setShowEditForm] = useState(false);
+  const [selectedPocket, setSelectedPocket] = useState('');
+  const [addAmount, setAddAmount] = useState('');
+  const [showAddMoneyForm, setShowAddMoneyForm] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function Pockets() {
       return;
     }
     fetchPockets(token);
-    fetchTotalBalance(token);
+    fetchAvailableBalance(token);
   }, [navigate]);
 
   const fetchPockets = (token) => {
@@ -31,7 +31,6 @@ function Pockets() {
       dataType: 'json',
       success: (response) => {
         setPockets(response.savings_pockets);
-        updateAvailableBalance(response.savings_pockets);
       },
       error: (xhr, status, error) => {
         console.error('Error fetching pockets:', error);
@@ -39,25 +38,19 @@ function Pockets() {
     });
   };
 
-  const fetchTotalBalance = (token) => {
+  const fetchAvailableBalance = (token) => {
     $.ajax({
-      url: 'https://geniuspockets.com/get_total_balance.php',
+      url: 'https://geniuspockets.com/get_total_balance.php', // Use the endpoint to get the total balance
       method: 'POST',
       data: { token },
       dataType: 'json',
       success: (response) => {
-        setTotalBalance(response.total_balance);
         setAvailableBalance(response.total_balance);
       },
       error: (xhr, status, error) => {
-        console.error('Error fetching total balance:', error);
+        console.error('Error fetching available balance:', error);
       }
     });
-  };
-
-  const updateAvailableBalance = (pockets) => {
-    const totalSaved = pockets.reduce((sum, pocket) => sum + parseFloat(pocket.saved_amount), 0);
-    setAvailableBalance(totalBalance - totalSaved);
   };
 
   const handleAddPocket = (e) => {
@@ -76,7 +69,6 @@ function Pockets() {
       success: (response) => {
         if (response.success) {
           setNewPocket({ name: '', description: '', goal_amount: '', deadline: '' });
-          setShowAddForm(false);
           fetchPockets(token);
         } else {
           console.error('Error adding pocket:', response.message);
@@ -84,34 +76,6 @@ function Pockets() {
       },
       error: (xhr, status, error) => {
         console.error('Error adding pocket:', error);
-      }
-    });
-  };
-
-  const handleEditPocket = (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-
-    $.ajax({
-      url: 'https://geniuspockets.com/update_pocket.php',
-      method: 'POST',
-      data: { ...editPocket, token },
-      dataType: 'json',
-      success: (response) => {
-        if (response.success) {
-          setEditPocket(null);
-          setShowEditForm(false);
-          fetchPockets(token);
-        } else {
-          console.error('Error editing pocket:', response.message);
-        }
-      },
-      error: (xhr, status, error) => {
-        console.error('Error editing pocket:', error);
       }
     });
   };
@@ -131,7 +95,6 @@ function Pockets() {
       success: (response) => {
         if (response.success) {
           fetchPockets(token);
-          fetchTotalBalance(token);
         } else {
           console.error('Error deleting pocket:', response.message);
         }
@@ -142,28 +105,112 @@ function Pockets() {
     });
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (showAddForm) {
-      setNewPocket((prev) => ({ ...prev, [name]: value }));
-    } else if (showEditForm) {
-      setEditPocket((prev) => ({ ...prev, [name]: value }));
-    }
+  const handleEditPocket = (pocket) => {
+    setEditingPocket(pocket);
   };
 
-  const handleEditClick = (pocket) => {
-    setEditPocket(pocket);
-    setShowEditForm(true);
-    setShowAddForm(false);
+  const handleUpdatePocket = (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    $.ajax({
+      url: 'https://geniuspockets.com/update_pocket.php',
+      method: 'POST',
+      data: { ...editingPocket, token },
+      dataType: 'json',
+      success: (response) => {
+        if (response.success) {
+          setEditingPocket(null);
+          fetchPockets(token);
+        } else {
+          console.error('Error updating pocket:', response.message);
+        }
+      },
+      error: (xhr, status, error) => {
+        console.error('Error updating pocket:', error);
+      }
+    });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewPocket((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditingPocket((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleAddMoney = (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    if (addAmount > availableBalance) {
+      alert("Insufficient balance to add this amount.");
+      return;
+    }
+
+    $.ajax({
+      url: 'https://geniuspockets.com/add_money_to_pocket.php',
+      method: 'POST',
+      data: { pocket_id: selectedPocket, amount: addAmount, token },
+      dataType: 'json',
+      success: (response) => {
+        if (response.success) {
+          setShowAddMoneyForm(false);
+          setAddAmount('');
+          fetchPockets(token);
+          fetchAvailableBalance(token);
+        } else {
+          console.error('Error adding money to pocket:', response.message);
+        }
+      },
+      error: (xhr, status, error) => {
+        console.error('Error adding money to pocket:', error);
+      }
+    });
   };
 
   return (
     <div className="pockets">
       <h2>My Pockets</h2>
-      <div className="total-balance">
-        <h3>Total Balance: ${totalBalance}</h3>
-        <h3>Available Balance: ${availableBalance}</h3>
-      </div>
+      <p>Available Balance: ${availableBalance}</p>
+      <button onClick={() => setEditingPocket(null)}>Add Pocket</button>
+      <button onClick={() => setShowAddMoneyForm(!showAddMoneyForm)}>Add Money</button>
+      {showAddMoneyForm && (
+        <form className="add-money-form" onSubmit={handleAddMoney}>
+          <h3>Add Money to Pocket</h3>
+          <select
+            value={selectedPocket}
+            onChange={(e) => setSelectedPocket(e.target.value)}
+            required
+          >
+            <option value="">Select Pocket</option>
+            {pockets.map((pocket) => (
+              <option key={pocket.id} value={pocket.id}>
+                {pocket.name}
+              </option>
+            ))}
+          </select>
+          <input
+            type="number"
+            value={addAmount}
+            onChange={(e) => setAddAmount(e.target.value)}
+            placeholder="Amount"
+            required
+          />
+          <button type="submit">Add Money</button>
+        </form>
+      )}
       <div className="pockets__list">
         {pockets.map((pocket) => (
           <div key={pocket.id} className="pocket">
@@ -172,24 +219,15 @@ function Pockets() {
             <p>Goal: ${pocket.goal_amount}</p>
             <p>Deadline: {pocket.deadline}</p>
             <p>Saved: ${pocket.saved_amount}</p>
-            <button className="edit-button" onClick={() => handleEditClick(pocket)}>
-              Edit
-            </button>
+            <button onClick={() => handleEditPocket(pocket)}>Edit</button>
             <button className="delete-button" onClick={() => handleDeletePocket(pocket.id)}>
               Delete
             </button>
           </div>
         ))}
       </div>
-      <div className="pockets__actions">
-        <button className="add-pocket-button" onClick={() => setShowAddForm(true)}>
-          Add Pocket
-        </button>
-        <button className="edit-pocket-button" onClick={() => setShowEditForm(true)}>
-          Edit Pocket
-        </button>
-      </div>
-      {showAddForm && (
+
+      {!editingPocket ? (
         <form className="add-pocket-form" onSubmit={handleAddPocket}>
           <h3>Add New Pocket</h3>
           <input
@@ -227,39 +265,38 @@ function Pockets() {
             Add Pocket
           </button>
         </form>
-      )}
-      {showEditForm && editPocket && (
-        <form className="edit-pocket-form" onSubmit={handleEditPocket}>
+      ) : (
+        <form className="edit-pocket-form" onSubmit={handleUpdatePocket}>
           <h3>Edit Pocket</h3>
           <input
             type="text"
             name="name"
-            value={editPocket.name}
-            onChange={handleChange}
+            value={editingPocket.name}
+            onChange={handleEditChange}
             placeholder="Name"
             required
           />
           <input
             type="text"
             name="description"
-            value={editPocket.description}
-            onChange={handleChange}
+            value={editingPocket.description}
+            onChange={handleEditChange}
             placeholder="Description"
             required
           />
           <input
             type="number"
             name="goal_amount"
-            value={editPocket.goal_amount}
-            onChange={handleChange}
+            value={editingPocket.goal_amount}
+            onChange={handleEditChange}
             placeholder="Goal Amount"
             required
           />
           <input
             type="date"
             name="deadline"
-            value={editPocket.deadline}
-            onChange={handleChange}
+            value={editingPocket.deadline}
+            onChange={handleEditChange}
             required
           />
           <button type="submit" className="edit-pocket-button">
