@@ -14,7 +14,11 @@ function Navbar() {
     }, []);
 
     const handleNaviToIntro = () => {
-        navigate('/');
+        if (isLoggedIn) {
+            navigate('/dashboard');
+        } else {
+            navigate('/');
+        }
     }
 
     const handleNaviToLogin = () => {

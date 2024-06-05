@@ -1,7 +1,19 @@
+import { useEffect } from 'react';
 import { Charts, Jars, noFee, Logo } from '../../assets/index';
+import { useNavigate } from 'react-router';
 import './intro.css';
 
 function Intro() {
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            navigate('/dashboard');
+        }
+    }, [navigate]);
+
     return (
         <div className='intro__page container'>
             <div className='intro__header'>
