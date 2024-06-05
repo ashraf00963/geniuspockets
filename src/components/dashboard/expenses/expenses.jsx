@@ -4,9 +4,9 @@ import $ from 'jquery';
 import './expenses.css';
 
 function Expenses() {
-  const [reason, setReason] = useState('food & goods');
-  const [amount, setAmount] = useState('');
   const [expenses, setExpenses] = useState([]);
+  const [reason, setReason] = useState('');
+  const [amount, setAmount] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,7 +33,7 @@ function Expenses() {
     });
   };
 
-  const handleExpense = (e) => {
+  const handleAddExpense = (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
     if (!token) {
@@ -54,6 +54,8 @@ function Expenses() {
       dataType: 'json',
       success: (response) => {
         if (response.success) {
+          setReason('');
+          setAmount('');
           fetchExpenses(token);
         } else {
           console.error('Error adding expense:', response.message);
@@ -67,19 +69,31 @@ function Expenses() {
 
   return (
     <div className="expenses">
-      <h2>Expenses</h2>
-      <form onSubmit={handleExpense}>
-        <div className="expenses__field">
-          <label>Category:</label>
-          <select value={reason} onChange={(e) => setReason(e.target.value)}>
-            <option value="food & goods">Food & Goods</option>
+      <h2>All Expenses</h2>
+      <div className="expenses__list">
+        {expenses.map((expense, index) => (
+          <div key={index} className="expense">
+            <p>Reason: {expense.reason}</p>
+            <p>Amount: ${expense.amount}</p>
+            <p>Date: {expense.date}</p>
+          </div>
+        ))}
+      </div>
+      <form className="add-expense-form" onSubmit={handleAddExpense}>
+        <h3>Add New Expense</h3>
+        <div className="expense__field">
+          <label>Reason:</label>
+          <select value={reason} onChange={(e) => setReason(e.target.value)} required>
+            <option value="">Select Reason</option>
+            <option value="food&goods">Food & Goods</option>
             <option value="entertainment">Entertainment</option>
-            <option value="house extras">House Extras</option>
+            <option value="house">House</option>
+            <option value="extras">Extras</option>
             <option value="rent">Rent</option>
             <option value="bills">Bills</option>
           </select>
         </div>
-        <div className="expenses__field">
+        <div className="expense__field">
           <label>Amount:</label>
           <input
             type="number"
@@ -88,18 +102,8 @@ function Expenses() {
             required
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="add-expense-button">Add Expense</button>
       </form>
-      <div className="expenses__list">
-        <h3>All Expenses</h3>
-        {expenses.map((expense, index) => (
-          <div key={index} className="expense">
-            <p>Category: {expense.reason}</p>
-            <p>Amount: ${expense.amount}</p>
-            <p>Date: {expense.date}</p>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }

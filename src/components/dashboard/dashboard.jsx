@@ -6,7 +6,6 @@ import './dashboard.css';
 function Dashboard() {
   const [totalBalance, setTotalBalance] = useState(0);
   const [savingsPockets, setSavingsPockets] = useState([]);
-  const [recentTransactions, setRecentTransactions] = useState([]);
   const [recentExpenses, setRecentExpenses] = useState([]);
   const [userName, setUserName] = useState('');
   const navigate = useNavigate();
@@ -35,7 +34,6 @@ function Dashboard() {
         } else {
           fetchTotalBalance(token);
           fetchSavingsPockets(token);
-          fetchRecentTransactions(token);
           fetchRecentExpenses(token);
         }
       },
@@ -76,29 +74,14 @@ function Dashboard() {
     });
   };
 
-  const fetchRecentTransactions = (token) => {
+  const fetchRecentExpenses = (token) => {
     $.ajax({
       url: 'https://geniuspockets.com/get_recent_transactions.php',
       method: 'POST',
-      data: { token, type: 'transaction' }, // Adjust as needed for your use case
+      data: { token, type: 'expense' },
       dataType: 'json',
       success: (response) => {
-        setRecentTransactions(response.transactions.slice(0, 3)); // Get only the latest three transactions
-      },
-      error: (xhr, status, error) => {
-        console.error('Error fetching recent transactions:', error);
-      }
-    });
-  };
-
-  const fetchRecentExpenses = (token) => {
-    $.ajax({
-      url: 'https://geniuspockets.com/get_recent_expenses.php',
-      method: 'POST',
-      data: { token },
-      dataType: 'json',
-      success: (response) => {
-        setRecentExpenses(response.expenses.slice(0, 2)); // Get only the latest two expenses
+        setRecentExpenses(response.transactions.slice(0, 2)); // Get only the latest two expenses
       },
       error: (xhr, status, error) => {
         console.error('Error fetching recent expenses:', error);
@@ -149,7 +132,7 @@ function Dashboard() {
       <div className="dashboard__recent-transactions">
         <h2>Recent Transactions</h2>
         <div className="dashboard__transactions-list">
-          {recentTransactions.map((transaction, index) => (
+          {recentExpenses.map((transaction, index) => (
             <div key={index} className="dashboard__transaction">
               <p>{transaction.reason}</p>
               <p>{transaction.amount}</p>
