@@ -66,6 +66,14 @@
     align-self: center;
     background-color: #2a373a;
     color: #ffd700;
+    width: calc(100% - 2rem);
+    padding: 1rem;
+}
+
+.dashboard__pocket h3 {
+    margin: 0;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
 }
 
 .dashboard__pocket-info {
@@ -81,6 +89,8 @@
     border-radius: 10px;
     text-align: center;
     color: #fff;
+    padding: 1rem;
+    width: 20%;
 }
 
 .pocket__deadline {
@@ -90,6 +100,8 @@
     border-radius: 10px;
     text-align: center;
     color: #fff;
+    padding: 1rem;
+    width: 20%;
 }
 
 .pocket__saved {
@@ -99,4 +111,10 @@
     border-radius: 10px;
     text-align: center;
     color: #fff;
+    padding: 1rem;
+    width: 20%;
+}
+
+.pocket__goal p, .pocket__deadline p, .pocket__saved p {
+    font-size: 1.2rem;
 }
