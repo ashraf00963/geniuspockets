@@ -209,13 +209,26 @@ function Pockets() {
             {pocket.description && 
               <p>Description: {pocket.description}</p>
             }
-            <p>Goal: €{pocket.goal_amount}</p>
-            <p>Deadline: {pocket.deadline}</p>
-            <p>Saved: €{pocket.saved_amount}</p>
-            <button onClick={() => handleEditPocket(pocket)}>Edit</button>
-            <button className="delete-button" onClick={() => { setDeletingPocket(pocket); setShowDeleteConfirmModal(true); }}>
-              Delete
-            </button>
+            <div className='pocket__list-info'>
+              <div className='list__goal'>
+                <p>Goal</p>
+                <p>€{pocket.goal_amount}</p>
+              </div>
+              <div className='list__deadline'>
+                <p>Deadline</p>
+                <p>{pocket.deadline}</p>
+              </div>
+              <div className='list__saved'>
+                <p>Saved</p>
+                <p>€{pocket.saved_amount}</p>
+              </div>
+            </div>
+            <div className='pocket__list-btns'>
+              <button className='edit-button' onClick={() => handleEditPocket(pocket)}>Edit</button>
+              <button className="delete-button" onClick={() => { setDeletingPocket(pocket); setShowDeleteConfirmModal(true); }}>
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
