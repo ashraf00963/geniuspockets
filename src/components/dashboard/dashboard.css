@@ -68,6 +68,7 @@
     color: #ffd700;
     width: calc(100% - 2rem);
     padding: 1rem;
+    border-radius: 5px;
 }
 
 .dashboard__pocket h3 {
@@ -117,4 +118,9 @@
 
 .pocket__goal p, .pocket__deadline p, .pocket__saved p {
     font-size: 1.2rem;
+    margin: 0;
+}
+
+.show-more-button {
+    margin-top: 1rem !important;
 }
