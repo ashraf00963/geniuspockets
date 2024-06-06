@@ -16,7 +16,8 @@
 }
 
 .popup__resend-content h2 {
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+  margin-top: 0;
 }
 
 .popup__resend-content form {
@@ -53,6 +54,10 @@
     color: #bbbbbb;
     font-size: 16px;
     background-color: transparent;
+    padding: 0 !important;
+    margin: 0 !important;
+    align-self: end !important;
+    font-family: "Josefin Sans", serif;
 }
 
 .close__resend:hover {
