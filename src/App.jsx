@@ -14,6 +14,7 @@ import Expenses from './components/dashboard/expenses/expenses';
 import Income from './components/dashboard/income/income';
 import IncomeChart from './components/dashboard/charts/incomeChart';
 import ExpensesChart from './components/dashboard/charts/expensesChart';
+import ResendVerificationEmail from './components/user/register/resendVerification';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Intro />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/register/resend-Verifiaction' element={<ResendVerificationEmail />} />
         <Route path='/login' element={<Login />} />
         <Route path='/login/identify' element={<Identify />} />
         <Route path='/account' element={<AuthCheck><AccountSettings /></AuthCheck>} />

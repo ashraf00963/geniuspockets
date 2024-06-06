@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { Link } from 'react-browser-router';
 import PasswordInput from '../password/PasswordInput';
 import './register.css';
+
 
 function Register() {
     const [fName, setFname] = useState('');
@@ -146,6 +148,7 @@ function Register() {
                                 </div>
                             </div>
                         </div>
+                        <Link to='/register/resend-Verifiaction'>resend verifiaction email</Link>
                         <button className='Reg__btn btn-primary' type='submit'>Register</button>
                     </form>
                 </div>
