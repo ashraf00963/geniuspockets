@@ -21,19 +21,19 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path='/' element={<Intro />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/register/resend-Verifiaction' element={<ResendVerificationEmail />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/login/identify' element={<Identify />} />
-        <Route path='/account' element={<AuthCheck><AccountSettings /></AuthCheck>} />
-        <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='/dashboard/mypockets' element={<Pockets />} />
-        <Route path='/dashboard/transactions' element={<Transaction />} /> 
-        <Route path='/dashboard/expenses' element={<Expenses />} />
-        <Route path='/dashboard/income' element={<Income />} />
-        <Route path='/dashboard/spendings' element={<ExpensesChart />} />
-        <Route path='/dashboard/income-charts' element={<IncomeChart />} />
+        <Route path="/" element={<Intro />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/register/resend-verification" element={<ResendVerificationEmail />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/login/identify" element={<Identify />} />
+        <Route path="/account" element={<AuthCheck><AccountSettings /></AuthCheck>} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/mypockets" element={<Pockets />} />
+        <Route path="/dashboard/transactions" element={<Transaction />} /> 
+        <Route path="/dashboard/expenses" element={<Expenses />} />
+        <Route path="/dashboard/income" element={<Income />} />
+        <Route path="/dashboard/spendings" element={<ExpensesChart />} />
+        <Route path="/dashboard/income-charts" element={<IncomeChart />} />
       </Routes>
     </Router>
   );
