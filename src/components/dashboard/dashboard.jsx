@@ -123,9 +123,13 @@ function Dashboard() {
     navigate('/dashboard/transactions');
   };
 
-  const handleCharts = () => {
+  const handleExpenseCharts = () => {
     navigate('/dashboard/spendings');
   };
+
+  const handleIncomeCharts = () => {
+    navigate('/dashboard/income-charts');
+  }
 
   return (
     <div className="dashboard container">
@@ -203,8 +207,12 @@ function Dashboard() {
         <button className="view-transactions-button" onClick={handleViewTransactions}>
           View All Transactions
         </button>
+        <h3>Income Charts</h3>
+        <button className="view-transactions-button" onClick={handleIncomeCharts}>
+          View Charts
+        </button>
         <h3>Spening Charts</h3>
-        <button className="view-transactions-button" onClick={handleCharts}>
+        <button className="view-transactions-button" onClick={handleExpenseCharts}>
           View Charts
         </button>
       </div>

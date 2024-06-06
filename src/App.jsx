@@ -14,6 +14,7 @@ import Expenses from './components/dashboard/expenses/expenses';
 import AddMoney from './components/dashboard/income/income';
 import Income from './components/dashboard/income/income';
 import SpendingChart from './components/dashboard/charts/spendingChart';
+import IncomeChart from './components/dashboard/charts/incomeChart';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path='/dashboard/expenses' element={<Expenses />} />
         <Route path='/dashboard/income' element={<Income />} />
         <Route path='/dashboard/spendings' element={<SpendingChart />} />
+        <Route path='/dashboard/income-charts' element={<IncomeChart />} />
       </Routes>
     </Router>
   );
