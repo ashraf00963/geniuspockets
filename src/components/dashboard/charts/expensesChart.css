@@ -9,6 +9,7 @@
   max-width: 800px;
   margin: 0 auto;
   margin-top: 5rem !important;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 .expenses-chart h2 {
@@ -24,6 +25,7 @@
   border-radius: 5px;
   font-size: 1rem;
   color: #333;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 .date-picker:focus {

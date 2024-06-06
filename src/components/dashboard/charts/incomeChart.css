@@ -8,7 +8,8 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     margin: 0 auto;
-    margin-top: 5rem !important
+    margin-top: 5rem !important;
+    font-family: "Josefin Sans", sans-serif;
   }
   
   .income-chart h2 {
@@ -24,12 +25,14 @@
     border-radius: 5px;
     font-size: 1rem;
     color: #333;
+    font-family: "Josefin Sans", sans-serif;
   }
   
   .date-picker:focus {
     outline: none;
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    font-family: "Josefin Sans", sans-serif;
   }
   
   .bar-chart {
