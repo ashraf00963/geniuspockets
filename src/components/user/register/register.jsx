@@ -148,7 +148,7 @@ function Register() {
                                 </div>
                             </div>
                         </div>
-                        <Link to='/register/resend-Verifiaction'>resend verifiaction email</Link>
+                        <Link to='resend-Verifiaction'>resend verifiaction email</Link>
                         <button className='Reg__btn btn-primary' type='submit'>Register</button>
                     </form>
                 </div>
