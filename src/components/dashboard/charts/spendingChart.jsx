@@ -25,8 +25,11 @@ function SpendingChart() {
       data: { token },
       dataType: 'json',
       success: (response) => {
+        console.log('Response:', response); // Add this line to log the response
         if (response.success) {
-          setSpendingData({ labels: response.labels, amounts: response.amounts });
+          const labels = response.labels.map(date => new Date(date).toLocaleDateString('en-US'));
+          const amounts = response.amounts.map(amount => parseFloat(amount));
+          setSpendingData({ labels, amounts });
         } else {
           console.error('Error fetching spending data:', response.message);
         }
@@ -50,10 +53,18 @@ function SpendingChart() {
     ],
   };
 
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
   return (
     <div className="spending-chart">
       <h2>All Time Spending</h2>
-      <Bar data={data} />
+      <Bar data={data} options={options} />
     </div>
   );
 }
