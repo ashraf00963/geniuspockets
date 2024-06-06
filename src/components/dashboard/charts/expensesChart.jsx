@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 import $ from 'jquery';
-import './spendingChart.css';
+import './expensesChart.css'; // Import the CSS file
 
-function SpendingChart() {
-  const [spendingData, setSpendingData] = useState({ labels: [], amounts: [] });
+function ExpensesChart() {
+  const [expensesData, setExpensesData] = useState({ labels: [], amounts: [] });
   const [selectedDate, setSelectedDate] = useState('');
   const navigate = useNavigate();
 
@@ -16,10 +16,10 @@ function SpendingChart() {
       navigate('/login');
       return;
     }
-    fetchSpendingData(token);
+    fetchExpensesData(token);
   }, [navigate]);
 
-  const fetchSpendingData = (token, date = null) => {
+  const fetchExpensesData = (token, date = null) => {
     const data = { token };
     if (date) {
       data.start_date = date;
@@ -32,13 +32,13 @@ function SpendingChart() {
       dataType: 'json',
       success: (response) => {
         if (response.success) {
-          setSpendingData({ labels: response.labels, amounts: response.amounts });
+          setExpensesData({ labels: response.labels, amounts: response.amounts });
         } else {
-          console.error('Error fetching spending data:', response.message);
+          console.error('Error fetching expenses data:', response.message);
         }
       },
       error: (xhr, status, error) => {
-        console.error('Error fetching spending data:', error);
+        console.error('Error fetching expenses data:', error);
       }
     });
   };
@@ -47,17 +47,17 @@ function SpendingChart() {
     const date = e.target.value;
     setSelectedDate(date);
     const token = localStorage.getItem('token');
-    fetchSpendingData(token, date);
+    fetchExpensesData(token, date);
   };
 
   const data = {
-    labels: spendingData.labels.slice(-5), // Show only the last 5 transactions initially
+    labels: expensesData.labels.slice(-5), // Show only the last 5 transactions initially
     datasets: [
       {
-        label: 'Spending Over Time',
-        data: spendingData.amounts.slice(-5), // Show only the last 5 transactions initially
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        label: 'Expenses Over Time',
+        data: expensesData.amounts.slice(-5), // Show only the last 5 transactions initially
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1,
       },
     ],
@@ -72,8 +72,8 @@ function SpendingChart() {
   };
 
   return (
-    <div className="spending-chart">
-      <h2>All Time Spending</h2>
+    <div className="expenses-chart">
+      <h2>All Time Expenses</h2>
       <input
         type="date"
         value={selectedDate}
@@ -85,4 +85,4 @@ function SpendingChart() {
   );
 }
 
-export default SpendingChart;
+export default ExpensesChart;

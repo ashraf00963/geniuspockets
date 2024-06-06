@@ -11,10 +11,9 @@ import Dashboard from './components/dashboard/dashboard';
 import Pockets from './components/dashboard/pockets/pockets';
 import Transaction from './components/dashboard/transactions/transaction';
 import Expenses from './components/dashboard/expenses/expenses';
-import AddMoney from './components/dashboard/income/income';
 import Income from './components/dashboard/income/income';
-import SpendingChart from './components/dashboard/charts/spendingChart';
 import IncomeChart from './components/dashboard/charts/incomeChart';
+import ExpensesChart from './components/dashboard/charts/expensesChart';
 
 function App() {
   return (
@@ -31,7 +30,7 @@ function App() {
         <Route path='/dashboard/transactions' element={<Transaction />} /> 
         <Route path='/dashboard/expenses' element={<Expenses />} />
         <Route path='/dashboard/income' element={<Income />} />
-        <Route path='/dashboard/spendings' element={<SpendingChart />} />
+        <Route path='/dashboard/spendings' element={<ExpensesChart />} />
         <Route path='/dashboard/income-charts' element={<IncomeChart />} />
       </Routes>
     </Router>

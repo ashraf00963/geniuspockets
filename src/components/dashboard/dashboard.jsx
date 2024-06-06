@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
 import './dashboard.css';
-import SpendingChart from './charts/spendingChart';
+import SpendingChart from './charts/expensesChart';
 
 function Dashboard() {
   const [totalBalance, setTotalBalance] = useState(0);
