@@ -37,7 +37,7 @@ function ResendVerificationEmailPopup({ onClose }) {
   return (
     <div className="popup__resend">
       <div className="popup__resend-content">
-        <button className='close__resend' onClick={onClose}>X</button>
+        <button className="close__resend" onClick={onClose}>X</button>
         <h2>Resend Verification Email</h2>
         <form onSubmit={handleResend}>
           <input
@@ -50,7 +50,6 @@ function ResendVerificationEmailPopup({ onClose }) {
           <button type="submit">Resend Email</button>
         </form>
         {message && <p>{message}</p>}
-        
       </div>
     </div>
   );

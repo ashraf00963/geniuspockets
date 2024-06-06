@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PasswordInput from '../password/PasswordInput';
-import ResendVerificationEmailPopup from './ResendVerificationEmailPopup'; // Import the new component
+import ResendVerificationEmailPopup from './ResendVerificationEmailPopup';
 import './register.css';
 
 function Register() {
@@ -12,44 +12,19 @@ function Register() {
   const [password, setPassword] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
   const [error, setError] = useState(null);
-  const [passwordVisible, setPasswordVisible] = useState(false);
   const [success, setSuccess] = useState(null);
-  const [passwordStrength, setPasswordStrength] = useState(0);
-  const [showPopup, setShowPopup] = useState(false); // Add state for showing the popup
+  const [showPopup, setShowPopup] = useState(false);
 
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
-
-  const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(String(email).toLowerCase());
-  };
-
-  const hasLowerCase = (str) => /[a-z]/.test(str);
-  const hasUpperCase = (str) => /[A-Z]/.test(str);
-  const hasDigit = (str) => /\d/.test(str);
-  const hasSpecialChar = (str) => /[!@#$%^&*(),.?":{}|<>]/.test(str);
-  const hasMinLength = (str) => str.length >= 8;
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.toLowerCase());
 
   const validatePassword = (password) => {
+    const hasLowerCase = (str) => /[a-z]/.test(str);
+    const hasUpperCase = (str) => /[A-Z]/.test(str);
+    const hasDigit = (str) => /\d/.test(str);
+    const hasSpecialChar = (str) => /[!@#$%^&*(),.?":{}|<>]/.test(str);
+    const hasMinLength = (str) => str.length >= 8;
+
     return hasLowerCase(password) && hasUpperCase(password) && hasDigit(password) && hasSpecialChar(password) && hasMinLength(password);
-  };
-
-  const calculatePasswordStrength = (password) => {
-    let score = 0;
-    if (hasMinLength(password)) score += 1; // At least 8 characters
-    if (hasUpperCase(password)) score += 1; // Uppercase letter
-    if (hasLowerCase(password)) score += 1; // Lowercase letter
-    if (hasDigit(password)) score += 1; // Digit
-    if (hasSpecialChar(password)) score += 1; // Special character
-    return score;
-  };
-
-  const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    setPasswordStrength(calculatePasswordStrength(newPassword));
   };
 
   const handleSubmit = async (e) => {
@@ -70,20 +45,12 @@ function Register() {
       return;
     }
 
-    const data = {
-      fName,
-      lName,
-      userName,
-      email,
-      password,
-    };
+    const data = { fName, lName, userName, email, password };
 
     try {
       const response = await fetch('/register.php', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
 
@@ -92,8 +59,6 @@ function Register() {
       if (result.success) {
         setSuccess(result.message);
         setError(null);
-
-        // Clear the form fields
         setFname('');
         setLname('');
         setUserName('');
