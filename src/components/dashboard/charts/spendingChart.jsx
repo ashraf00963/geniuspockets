@@ -22,6 +22,7 @@ function SpendingChart() {
         body: JSON.stringify({ token, view }),
       });
       const data = await response.json();
+      console.log('Fetched Data:', data); // Log fetched data
       const labels = data.labels;
       const amounts = data.amounts.map(amount => -Math.abs(amount));  // Ensure expenses are shown as negative
 
@@ -48,7 +49,26 @@ function SpendingChart() {
         <button onClick={() => setView('days')}>Days</button>
         <button onClick={() => setView('months')}>Months</button>
       </div>
-      <Bar data={chartData} options={{ scales: { y: { beginAtZero: true } } }} />
+      <Bar
+        data={chartData}
+        options={{
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Amount (€)',
+              },
+            },
+            x: {
+              title: {
+                display: true,
+                text: view === 'days' ? 'Days' : 'Months',
+              },
+            },
+          },
+        }}
+      />
     </div>
   );
 }
