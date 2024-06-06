@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
-import $ from 'jquery';
+import axios from 'axios';
 import './spendingChart.css';
 
 function SpendingChart() {
@@ -15,27 +15,20 @@ function SpendingChart() {
       navigate('/login');
       return;
     }
-    fetchSpendingData(token);
-  }, [navigate]);
 
-  const fetchSpendingData = (token) => {
-    $.ajax({
-      url: 'https://geniuspockets.com/get_spending_data.php',
-      method: 'POST',
-      data: { token },
-      dataType: 'json',
-      success: (response) => {
-        if (response.success) {
-          setSpendingData({ labels: response.labels, amounts: response.amounts });
+    axios.post('https://geniuspockets.com/get_spending_data.php', { token })
+      .then(response => {
+        console.log('Response data:', response.data); // Add logging to inspect the response data
+        if (response.data.labels && response.data.amounts) {
+          setSpendingData(response.data);
         } else {
-          console.error('Error fetching spending data:', response.message);
+          console.error('Invalid response structure:', response.data);
         }
-      },
-      error: (xhr, status, error) => {
+      })
+      .catch(error => {
         console.error('Error fetching spending data:', error);
-      }
-    });
-  };
+      });
+  }, [navigate]);
 
   const data = {
     labels: spendingData.labels,
