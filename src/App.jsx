@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Intro />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/register/resend-verification" element={<ResendVerificationEmail />} />
+        <Route path="/resend-verification" element={<ResendVerificationEmail />} />
         <Route path="/login" element={<Login />} />
         <Route path="/login/identify" element={<Identify />} />
         <Route path="/account" element={<AuthCheck><AccountSettings /></AuthCheck>} />
