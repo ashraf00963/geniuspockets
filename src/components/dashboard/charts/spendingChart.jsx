@@ -29,7 +29,7 @@ function SpendingChart() {
     labels: spendingData.labels,
     datasets: [
       {
-        label: 'Spending',
+        label: 'Spending Over Time',
         data: spendingData.amounts,
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -40,7 +40,7 @@ function SpendingChart() {
 
   return (
     <div className="spending-chart">
-      <h2>Spending Over Time</h2>
+      <h2>All Time Spending</h2>
       <Bar data={data} />
     </div>
   );
