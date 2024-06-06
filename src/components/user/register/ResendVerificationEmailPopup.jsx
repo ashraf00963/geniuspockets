@@ -20,6 +20,7 @@ function ResendVerificationEmailPopup({ onClose }) {
       });
 
       const result = await response.json();
+      console.log("Server response:", result);
 
       if (result.success) {
         setMessage(result.message);
@@ -30,6 +31,7 @@ function ResendVerificationEmailPopup({ onClose }) {
         setMessage(result.message);
       }
     } catch (error) {
+      console.error("Error during resending verification email:", error);
       setMessage('An error occurred. Please try again later.');
     }
   };

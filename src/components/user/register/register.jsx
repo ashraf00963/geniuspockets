@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PasswordInput from '../password/PasswordInput';
 import ResendVerificationEmailPopup from './ResendVerificationEmailPopup';
 import './register.css';
@@ -14,6 +14,8 @@ function Register() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+
+  const navigate = useNavigate();
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.toLowerCase());
 
@@ -55,10 +57,13 @@ function Register() {
       });
 
       const result = await response.json();
+      console.log("Server response:", result);
 
       if (result.success) {
         setSuccess(result.message);
         setError(null);
+
+        // Clear the form fields
         setFname('');
         setLname('');
         setUserName('');
@@ -70,6 +75,7 @@ function Register() {
         setSuccess(null);
       }
     } catch (error) {
+      console.error("Error during registration:", error);
       setError("An error occurred. Please try again later.");
       setSuccess(null);
     }
