@@ -18,7 +18,11 @@ function SpendingChart() {
 
     axios.post('https://geniuspockets.com/get_spending_data.php', { token })
       .then(response => {
-        setSpendingData(response.data);
+        if (response.data.success) {
+          setSpendingData({ labels: response.data.labels, amounts: response.data.amounts });
+        } else {
+          console.error('Error fetching spending data:', response.data.message);
+        }
       })
       .catch(error => {
         console.error('Error fetching spending data:', error);
