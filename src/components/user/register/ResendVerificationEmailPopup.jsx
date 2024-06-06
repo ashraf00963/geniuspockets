@@ -19,8 +19,11 @@ function ResendVerificationEmailPopup({ onClose }) {
         body: JSON.stringify({ email }),
       });
 
-      const result = await response.json();
-      console.log("Server response:", result);
+      const text = await response.text(); // Get the raw response as text
+      console.log("Raw server response:", text);
+
+      const result = JSON.parse(text); // Attempt to parse the text as JSON
+      console.log("Parsed server response:", result);
 
       if (result.success) {
         setMessage(result.message);
