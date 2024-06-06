@@ -14,12 +14,12 @@ function SpendingChart() {
   const fetchData = async (view) => {
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`https://geniuspockets.com/get_spending_data.php?view=${view}`, {
+      const response = await fetch('https://geniuspockets.com/get_spending_data.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ token }),
+        body: JSON.stringify({ token, view }),
       });
       const data = await response.json();
       const labels = data.labels;
