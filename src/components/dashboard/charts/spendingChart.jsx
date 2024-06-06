@@ -7,6 +7,7 @@ import './spendingChart.css';
 
 function SpendingChart() {
   const [spendingData, setSpendingData] = useState({ labels: [], amounts: [] });
+  const [selectedDate, setSelectedDate] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,18 +19,20 @@ function SpendingChart() {
     fetchSpendingData(token);
   }, [navigate]);
 
-  const fetchSpendingData = (token) => {
+  const fetchSpendingData = (token, date = null) => {
+    const data = { token };
+    if (date) {
+      data.start_date = date;
+    }
+
     $.ajax({
       url: 'https://geniuspockets.com/get_spending_data.php',
       method: 'POST',
-      data: { token },
+      data,
       dataType: 'json',
       success: (response) => {
-        console.log('Response:', response); // Add this line to log the response
         if (response.success) {
-          const labels = response.labels.map(date => new Date(date).toLocaleDateString('en-US'));
-          const amounts = response.amounts.map(amount => parseFloat(amount));
-          setSpendingData({ labels, amounts });
+          setSpendingData({ labels: response.labels, amounts: response.amounts });
         } else {
           console.error('Error fetching spending data:', response.message);
         }
@@ -40,12 +43,19 @@ function SpendingChart() {
     });
   };
 
+  const handleDateChange = (e) => {
+    const date = e.target.value;
+    setSelectedDate(date);
+    const token = localStorage.getItem('token');
+    fetchSpendingData(token, date);
+  };
+
   const data = {
-    labels: spendingData.labels,
+    labels: spendingData.labels.slice(-5), // Show only the last 5 transactions initially
     datasets: [
       {
         label: 'Spending Over Time',
-        data: spendingData.amounts,
+        data: spendingData.amounts.slice(-5), // Show only the last 5 transactions initially
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
@@ -64,6 +74,12 @@ function SpendingChart() {
   return (
     <div className="spending-chart">
       <h2>All Time Spending</h2>
+      <input
+        type="date"
+        value={selectedDate}
+        onChange={handleDateChange}
+        className="date-picker"
+      />
       <Bar data={data} options={options} />
     </div>
   );
