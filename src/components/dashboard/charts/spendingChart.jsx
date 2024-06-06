@@ -1,74 +1,47 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
-import './SpendingChart.css';
+import axios from 'axios';
+import './spendingChart.css';
 
 function SpendingChart() {
-  const [view, setView] = useState('days');
-  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
+  const [spendingData, setSpendingData] = useState({ labels: [], amounts: [] });
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchData(view);
-  }, [view]);
-
-  const fetchData = async (view) => {
     const token = localStorage.getItem('token');
-    try {
-      const response = await fetch('https://geniuspockets.com/get_spending_data.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token, view }),
-      });
-      const data = await response.json();
-      console.log('Fetched Data:', data); // Log fetched data
-      const labels = data.labels;
-      const amounts = data.amounts.map(amount => -Math.abs(amount));  // Ensure expenses are shown as negative
-
-      setChartData({
-        labels,
-        datasets: [
-          {
-            label: `Spending in ${view === 'days' ? 'last 7 days' : 'last 12 months'}`,
-            data: amounts,
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1,
-          },
-        ],
-      });
-    } catch (error) {
-      console.error('Error fetching spending data:', error);
+    if (!token) {
+      navigate('/login');
+      return;
     }
+
+    axios.post('https://geniuspockets.com/get_spending_data.php', { token })
+      .then(response => {
+        setSpendingData(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching spending data:', error);
+      });
+  }, [navigate]);
+
+  const data = {
+    labels: spendingData.labels,
+    datasets: [
+      {
+        label: 'Spending',
+        data: spendingData.amounts,
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      },
+    ],
   };
 
   return (
     <div className="spending-chart">
-      <div className="chart-controls">
-        <button onClick={() => setView('days')}>Days</button>
-        <button onClick={() => setView('months')}>Months</button>
-      </div>
-      <Bar
-        data={chartData}
-        options={{
-          scales: {
-            y: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Amount (€)',
-              },
-            },
-            x: {
-              title: {
-                display: true,
-                text: view === 'days' ? 'Days' : 'Months',
-              },
-            },
-          },
-        }}
-      />
+      <h2>Spending Over Time</h2>
+      <Bar data={data} />
     </div>
   );
 }
