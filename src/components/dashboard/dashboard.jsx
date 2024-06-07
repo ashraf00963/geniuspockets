@@ -211,7 +211,7 @@ function Dashboard() {
         <button className="view-transactions-button" onClick={handleIncomeCharts}>
           View Charts
         </button>
-        <h3>Spening Charts</h3>
+        <h3>Spending Charts</h3>
         <button className="view-transactions-button" onClick={handleExpenseCharts}>
           View Charts
         </button>
