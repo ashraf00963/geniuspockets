@@ -1,4 +1,4 @@
-<img src="src/assets/logo.png" alt="Genius Pockets Logo" />
+<img src="src/assets/logo.png" alt="Genius Pockets Logo" width="200" />
 
 # Genius Pockets
 
