@@ -1,3 +1,5 @@
+<img src="src/assets/logo.png" alt="Genius Pockets Logo" />
+
 # Genius Pockets
 
 ## Overview
